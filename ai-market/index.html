@@ -509,13 +509,14 @@
             left: 0;
         }
         
-        /* Newsletter CTA - Full Width */
+        /* Full Width Email CTA Section */
         .newsletter-cta {
             background: linear-gradient(135deg, var(--dark) 0%, #1e1b4b 100%);
             padding: 80px 0;
             margin-top: 60px;
             border-top: 1px solid rgba(124, 58, 237, 0.2);
             border-bottom: 1px solid rgba(124, 58, 237, 0.2);
+            width: 100%;
         }
         
         .newsletter-cta .container {
@@ -572,11 +573,12 @@
             background: var(--secondary);
         }
         
-        /* Footer - Full Width */
+        /* Full Width Footer */
         .site-footer {
             background: rgba(15, 23, 42, 0.95);
             padding: 80px 0 40px;
             border-top: 1px solid rgba(124, 58, 237, 0.2);
+            width: 100%;
         }
         
         .footer-grid {
@@ -1071,7 +1073,8 @@
                 </div>
             </div>
         </section>
-        
+    </main>
+    
     <!-- Full Width Email CTA Section -->
     <section class="newsletter-cta full-width">
         <div class="container">
@@ -1147,7 +1150,7 @@
     </footer>
     
     <script>
-        // Same JavaScript as before
+        // Filter functionality
         document.querySelectorAll('.filter-btn').forEach(button => {
             button.addEventListener('click', () => {
                 document.querySelectorAll('.filter-btn').forEach(btn => {
@@ -1179,6 +1182,7 @@
             });
         });
         
+        // Mobile menu toggle
         const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
         const nav = document.querySelector('nav ul');
         
@@ -1186,6 +1190,7 @@
             nav.style.display = nav.style.display === 'block' ? 'none' : 'block';
         });
         
+        // Close mobile menu when clicking on a link
         document.querySelectorAll('nav a').forEach(link => {
             link.addEventListener('click', () => {
                 if (window.innerWidth <= 768) {
