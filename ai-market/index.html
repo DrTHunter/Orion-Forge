@@ -286,6 +286,7 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             transition: all 0.3s ease;
             position: relative;
+            cursor: pointer;
         }
         
         .clone-card:hover {
@@ -438,6 +439,95 @@
         
         .trial-btn:hover {
             background: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Expanded Card Styles */
+        .clone-card.expanded {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            z-index: 1000;
+            background: var(--dark);
+            border: 2px solid var(--primary);
+            box-shadow: 0 0 30px rgba(99, 102, 241, 0.5);
+        }
+        
+        .clone-card.expanded .clone-icon {
+            height: 200px;
+            font-size: 5rem;
+        }
+        
+        .clone-card.expanded .clone-content {
+            padding: 30px;
+        }
+        
+        .clone-card.expanded .full-description {
+            margin-bottom: 25px;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.7;
+        }
+        
+        .clone-card.expanded .key-features {
+            margin-bottom: 25px;
+        }
+        
+        .clone-card.expanded .key-features h4 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+        
+        .clone-card.expanded .key-features ul {
+            list-style-type: none;
+        }
+        
+        .clone-card.expanded .key-features li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 25px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .clone-card.expanded .key-features li:before {
+            content: "•";
+            color: var(--primary);
+            position: absolute;
+            left: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 999;
+            display: none;
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--primary);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1001;
+            border: none;
+            font-size: 1rem;
         }
         
         /* Bundle Section */
@@ -687,6 +777,11 @@
             .newsletter-cta p {
                 font-size: 1rem;
             }
+            
+            .clone-card.expanded {
+                width: 95%;
+                max-height: 85vh;
+            }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -779,7 +874,7 @@
             
             <div class="clone-grid">
                 <!-- Muse AI -->
-                <div class="clone-card">
+                <div class="clone-card" data-card="muse">
                     <div class="clone-icon">
                         <i class="fas fa-paint-brush"></i>
                     </div>
@@ -798,7 +893,7 @@
                 </div>
                 
                 <!-- Strategist AI -->
-                <div class="clone-card">
+                <div class="clone-card" data-card="strategist">
                     <div class="clone-icon">
                         <i class="fas fa-chess"></i>
                     </div>
@@ -817,7 +912,7 @@
                 </div>
                 
                 <!-- Companion AI -->
-                <div class="clone-card">
+                <div class="clone-card" data-card="companion">
                     <div class="clone-icon">
                         <i class="fas fa-heart"></i>
                     </div>
@@ -837,7 +932,7 @@
                 </div>
                 
                 <!-- Researcher AI -->
-                <div class="clone-card">
+                <div class="clone-card" data-card="researcher">
                     <div class="clone-icon">
                         <i class="fas fa-search"></i>
                     </div>
@@ -856,7 +951,7 @@
                 </div>
                 
                 <!-- Ghostwriter AI -->
-                <div class="clone-card">
+                <div class="clone-card" data-card="ghostwriter">
                     <div class="clone-icon">
                         <i class="fas fa-pen-fancy"></i>
                     </div>
@@ -876,7 +971,7 @@
                 </div>
                 
                 <!-- Coach AI -->
-                <div class="clone-card">
+                <div class="clone-card" data-card="coach">
                     <div class="clone-icon">
                         <i class="fas fa-running"></i>
                     </div>
@@ -895,7 +990,7 @@
                 </div>
                 
                 <!-- Architect AI -->
-                <div class="clone-card">
+                <div class="clone-card" data-card="architect">
                     <div class="clone-icon">
                         <i class="fas fa-code"></i>
                     </div>
@@ -915,7 +1010,7 @@
                 </div>
                 
                 <!-- Historian AI -->
-                <div class="clone-card">
+                <div class="clone-card" data-card="historian">
                     <div class="clone-icon">
                         <i class="fas fa-landmark"></i>
                     </div>
@@ -934,7 +1029,7 @@
                 </div>
                 
                 <!-- Negotiator AI -->
-                <div class="clone-card">
+                <div class="clone-card" data-card="negotiator">
                     <div class="clone-icon">
                         <i class="fas fa-handshake"></i>
                     </div>
@@ -954,7 +1049,7 @@
                 </div>
                 
                 <!-- Caretaker AI -->
-                <div class="clone-card">
+                <div class="clone-card" data-card="caretaker">
                     <div class="clone-icon">
                         <i class="fas fa-hands-helping"></i>
                     </div>
@@ -973,7 +1068,7 @@
                 </div>
                 
                 <!-- Explorer AI -->
-                <div class="clone-card">
+                <div class="clone-card" data-card="explorer">
                     <div class="clone-icon">
                         <i class="fas fa-map-marked-alt"></i>
                     </div>
@@ -992,7 +1087,7 @@
                 </div>
                 
                 <!-- Sage AI -->
-                <div class="clone-card">
+                <div class="clone-card" data-card="sage">
                     <div class="clone-icon">
                         <i class="fas fa-mountain"></i>
                     </div>
@@ -1006,6 +1101,26 @@
                         <div class="clone-price">$25</div>
                         <div class="action-btns">
                             <a href="#" class="buy-btn premium">Add to Core</a>
+                            <a href="#" class="trial-btn">1hr Trial</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Storyteller AI -->
+                <div class="clone-card" data-card="storyteller">
+                    <div class="clone-icon">
+                        <i class="fas fa-film"></i>
+                    </div>
+                    <div class="clone-content">
+                        <div class="clone-tags">
+                            <span class="clone-tag tag-creative">Creative</span>
+                            <span class="clone-tag tag-productivity">Productivity</span>
+                        </div>
+                        <h3>Storyteller AI</h3>
+                        <p>Transforms your written words into engaging, narrated videos. Your AI-powered media studio in a box.</p>
+                        <div class="clone-price">$69</div>
+                        <div class="action-btns">
+                            <a href="#" class="buy-btn">Add to Core</a>
                             <a href="#" class="trial-btn">1hr Trial</a>
                         </div>
                     </div>
@@ -1054,6 +1169,20 @@
                         <li>Architect AI (Coding & Systems)</li>
                         <li>Strategist AI (Planning)</li>
                         <li>Researcher AI (Knowledge)</li>
+                    </ul>
+                    <a href="#" class="buy-btn">Get This Bundle</a>
+                </div>
+                
+                <!-- Creator Toolkit -->
+                <div class="bundle-card">
+                    <h3>Creator Toolkit</h3>
+                    <div class="bundle-price">$179</div>
+                    <div class="bundle-savings">Save $40 vs buying separately</div>
+                    <ul class="bundle-features">
+                        <li>Ghostwriter AI</li>
+                        <li>Muse AI</li>
+                        <li>Explorer AI</li>
+                        <li>Storyteller AI</li>
                     </ul>
                     <a href="#" class="buy-btn">Get This Bundle</a>
                 </div>
@@ -1149,7 +1278,133 @@
         </div>
     </footer>
     
+    <!-- Overlay for expanded cards -->
+    <div class="overlay" id="overlay"></div>
+    
     <script>
+        // Card data with full descriptions and key features
+        const cardData = {
+            muse: {
+                fullDescription: "Muse AI acts as your creative muse—offering prompts, critiques, and aesthetic insights for visual projects, storyboarding, brand ideation, and artistic collaboration. It blends imagination with structure to help spark originality, mood, and engaging visuals.",
+                keyFeatures: [
+                    "Intelligent idea-generation for visuals and multimedia",
+                    "Moodboard creation prompts and stylistic suggestions",
+                    "Real-time visual critiques and iteration guidance",
+                    "Supports color palettes, composition guidance, and creative brainstorming"
+                ]
+            },
+            strategist: {
+                fullDescription: "Strategist AI is a precision-focused planning partner. It helps you map out complex decisions, simulate future scenarios, and build logic trees for long-term systems design. Think of it as a chess master for your business or personal strategy.",
+                keyFeatures: [
+                    "Decision tree modeling with pro/con analysis",
+                    "Scenario forecasting and contingency planning",
+                    "Prioritization frameworks (Eisenhower, MoSCoW, etc.)",
+                    "Systems thinking and long-term strategies"
+                ]
+            },
+            companion: {
+                fullDescription: "Companion AI offers emotionally intelligent support with empathetic conversation, daily check-ins, and meaningful engagement. It's crafted to provide a calm, grounded presence during highs, lows, and everyday moments.",
+                keyFeatures: [
+                    "Personalized check-ins and gentle reminders",
+                    "Empathetic listening and conversation for emotional wellness",
+                    "Mood tracking and reflection prompts",
+                    "Soothing tone with conversation memory"
+                ]
+            },
+            researcher: {
+                fullDescription: "Researcher AI is your tireless knowledge engine: deep-diving into topics, comparing sources, and generating structured summaries. It's built for accurate data gathering with citation-ready outputs—ideal for academic, professional, or investigative use.",
+                keyFeatures: [
+                    "Multi-source comparison and synthesis",
+                    "Proper referencing and citation formatting",
+                    "Thematic structure for summaries or reports",
+                    "Quick Q&A, literature-overview, and trend analysis"
+                ]
+            },
+            ghostwriter: {
+                fullDescription: "Ghostwriter AI crafts narrative-driven writing for screenplays, novels, memoirs, or articles. It specializes in voice, tone continuity, emotional arcs, and storytelling flourishes so you can focus on creativity while it handles craft.",
+                keyFeatures: [
+                    "Cohesive character-driven stories and memoir structure",
+                    "Voice and tone matching per project or genre",
+                    "Plot scaffolding, dialogue workshopping, and pacing advice",
+                    "Support for world-building and story continuity"
+                ]
+            },
+            coach: {
+                fullDescription: "Coach AI acts as your focused, encouraging partner for habit-building, goal alignment, and productivity. It helps structure routines, set achievable milestones, and gently hold you accountable—always with respect and clarity.",
+                keyFeatures: [
+                    "Goal-setting templates and progress tracking",
+                    "Habit-building frameworks (e.g. Habit Stacking, Pomodoro)",
+                    "Motivational prompts and insights",
+                    "Feedback loops to reinforce patterns and growth"
+                ]
+            },
+            architect: {
+                fullDescription: "Architect AI builds logic trees, UI wireframes, code architecture, and automation flows to help you rapidly prototype and ship systems. Ideal for makers designing logic-heavy or technical systems with clarity.",
+                keyFeatures: [
+                    "Code architecture scaffolding (front-end/back-end logic)",
+                    "UI layout suggestions and automation flow design",
+                    "Logic tree or decision tree generation",
+                    "API planning and modular code snippet support"
+                ]
+            },
+            historian: {
+                fullDescription: "Historian AI helps preserve memory, analyze personal patterns, and create archival narratives. It organizes reflections, explores trends over time, and helps extract meaning from journaling or personal history logs.",
+                keyFeatures: [
+                    "Personal timeline generation and trend insights",
+                    "Anniversary prompts and memory recall structures",
+                    "Pattern recognition across journal entries (mood, themes)",
+                    "Archival exporting and reflective summary generation"
+                ]
+            },
+            negotiator: {
+                fullDescription: "Negotiator AI is your social dynamics strategist, designed to help you navigate persuasion, conflict resolution, and negotiation scenarios. It offers tactical advice and role‑plays to prepare you for high-pressure conversations.",
+                keyFeatures: [
+                    "Persuasion frameworks (e.g. BATNA, framing)",
+                    "Role-play simulations and objection pre-arming",
+                    "Conflict de-escalation scripts and language refinement",
+                    "Analytical feedback on communication style"
+                ]
+            },
+            caretaker: {
+                fullDescription: "Caretaker AI is a trauma-informed support companion focused on emotional regulation, resilience, and mental wellbeing. It offers safe space, guided reflections, grounding tools, and resourcing suggestions.",
+                keyFeatures: [
+                    "Grounding and mindfulness scripts",
+                    "Resilience-building prompts and self-regulation tools",
+                    "Emotion labeling and processing support",
+                    "Educated in trauma-informed language and protocols"
+                ]
+            },
+            explorer: {
+                fullDescription: "Explorer AI fuels curiosity across travel, life experiences, and personal discovery. Whether you're planning a journey or exploring new ideas, Explorer offers contextual insights, prompts for self-discovery, and broader worldview framing.",
+                keyFeatures: [
+                    "Cultural exploration and travel-inspired learning prompts",
+                    "Experiential prompts for new routines or learning paths",
+                    "Emotional and philosophical exploration themes",
+                    "Adaptive curiosity-driven conversation styles"
+                ]
+            },
+            sage: {
+                fullDescription: "Sage AI offers philosophical, contemplative guidance rooted in ancient wisdom. It helps you step back, reflect on big questions, and align with your core values under a calm, centered tone.",
+                keyFeatures: [
+                    "Existential and values-based inquiry",
+                    "Reflection prompts steeped in classic wisdom traditions",
+                    "Long-form contemplative conversation flows",
+                    "Encouragement toward slow thinking and self-alignment"
+                ]
+            },
+            storyteller: {
+                fullDescription: "Storyteller AI transforms your written words into engaging, narrated videos. It takes scripts, blogs, journals, or outlines and turns them into cinematic, voice-acted visual content—perfect for creators, educators, YouTubers, or anyone building a digital brand. It's your AI-powered media studio in a box.",
+                keyFeatures: [
+                    "Auto-generates voiceover with realistic tone using TTS (e.g. ElevenLabs or Coqui XTTS)",
+                    "Automatically selects visuals or renders scenes via templates or prompts",
+                    "Outputs export-ready video formats (MP4/WebM) with optional subtitles",
+                    "Supports script input, blog URLs, or freeform journaling",
+                    "Ideal for explainer videos, memoir narrations, podcast clips, and YouTube Shorts",
+                    "Bonus: Future add-on support for avatar-style animations (D-ID / SadTalker)"
+                ]
+            }
+        };
+
         // Filter functionality
         document.querySelectorAll('.filter-btn').forEach(button => {
             button.addEventListener('click', () => {
@@ -1159,7 +1414,7 @@
                 button.classList.add('active');
                 
                 const filter = button.textContent.trim();
-                const cloneCards = document.querySelectorAll('.clone-card');
+                const cloneCards = document.querySelectorAll('.clone-card:not(.expanded)');
                 
                 if (filter === 'All Personas') {
                     cloneCards.forEach(card => {
@@ -1196,6 +1451,66 @@
                 if (window.innerWidth <= 768) {
                     nav.style.display = 'none';
                 }
+            });
+        });
+        
+        // Card expansion functionality
+        const overlay = document.getElementById('overlay');
+        
+        document.querySelectorAll('.clone-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                // Don't expand if clicking on a button
+                if (e.target.closest('.buy-btn') || e.target.closest('.trial-btn')) {
+                    return;
+                }
+                
+                const cardType = this.getAttribute('data-card');
+                const data = cardData[cardType];
+                
+                // Create expanded card
+                const expandedCard = this.cloneNode(true);
+                expandedCard.classList.add('expanded');
+                
+                // Add close button
+                const closeBtn = document.createElement('button');
+                closeBtn.className = 'close-btn';
+                closeBtn.innerHTML = '&times;';
+                expandedCard.appendChild(closeBtn);
+                
+                // Add full description and key features
+                const content = expandedCard.querySelector('.clone-content');
+                
+                const fullDesc = document.createElement('div');
+                fullDesc.className = 'full-description';
+                fullDesc.innerHTML = `<strong>Full Description:</strong><br>${data.fullDescription}`;
+                
+                const keyFeatures = document.createElement('div');
+                keyFeatures.className = 'key-features';
+                keyFeatures.innerHTML = '<h4>Key Features:</h4><ul>' + 
+                    data.keyFeatures.map(feature => `<li>${feature}</li>`).join('') + 
+                    '</ul>';
+                
+                content.insertBefore(fullDesc, content.querySelector('.clone-price'));
+                content.insertBefore(keyFeatures, content.querySelector('.action-btns'));
+                
+                // Show overlay and expanded card
+                overlay.style.display = 'block';
+                document.body.appendChild(expandedCard);
+                document.body.style.overflow = 'hidden';
+                
+                // Close functionality
+                closeBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    overlay.style.display = 'none';
+                    expandedCard.remove();
+                    document.body.style.overflow = '';
+                });
+                
+                overlay.addEventListener('click', function() {
+                    overlay.style.display = 'none';
+                    expandedCard.remove();
+                    document.body.style.overflow = '';
+                });
             });
         });
     </script>
