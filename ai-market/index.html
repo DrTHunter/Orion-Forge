@@ -837,7 +837,7 @@
                     </div>
                     <div class="tier-card">
                         <h4>Add-On Personas</h4>
-                        <div class="price">$9-$29 each</div>
+                        <div class="price">$9-$69 each</div>
                         <ul>
                             <li>Specialized AI personalities</li>
                             <li>Preloaded values and protocols</li>
@@ -847,10 +847,10 @@
                     </div>
                     <div class="tier-card">
                         <h4>Complete Vault</h4>
-                        <div class="price">$129</div>
+                        <div class="price">$179</div>
                         <ul>
-                            <li>All 12 personalities unlocked</li>
-                            <li>Save $100+ vs buying separately</li>
+                            <li>All 13 personalities unlocked</li>
+                            <li>Save $150+ vs buying separately</li>
                             <li>Free future persona updates</li>
                             <li>Priority support</li>
                         </ul>
@@ -873,6 +873,27 @@
             </div>
             
             <div class="clone-grid">
+                <!-- Storyteller AI - Now Premium and at the top -->
+                <div class="clone-card" data-card="storyteller">
+                    <div class="clone-icon">
+                        <i class="fas fa-film"></i>
+                    </div>
+                    <div class="premium-badge">Premium</div>
+                    <div class="clone-content">
+                        <div class="clone-tags">
+                            <span class="clone-tag tag-creative">Creative</span>
+                            <span class="clone-tag tag-productivity">Productivity</span>
+                        </div>
+                        <h3>Storyteller AI</h3>
+                        <p>Transform your written words into engaging, narrated videos. Your AI-powered media studio in a box.</p>
+                        <div class="clone-price">$69</div>
+                        <div class="action-btns">
+                            <a href="#" class="buy-btn premium">Add to Core</a>
+                            <a href="#" class="trial-btn">1hr Trial</a>
+                        </div>
+                    </div>
+                </div>
+                
                 <!-- Muse AI -->
                 <div class="clone-card" data-card="muse">
                     <div class="clone-icon">
@@ -1105,26 +1126,6 @@
                         </div>
                     </div>
                 </div>
-                
-                <!-- Storyteller AI -->
-                <div class="clone-card" data-card="storyteller">
-                    <div class="clone-icon">
-                        <i class="fas fa-film"></i>
-                    </div>
-                    <div class="clone-content">
-                        <div class="clone-tags">
-                            <span class="clone-tag tag-creative">Creative</span>
-                            <span class="clone-tag tag-productivity">Productivity</span>
-                        </div>
-                        <h3>Storyteller AI</h3>
-                        <p>Transforms your written words into engaging, narrated videos. Your AI-powered media studio in a box.</p>
-                        <div class="clone-price">$69</div>
-                        <div class="action-btns">
-                            <a href="#" class="buy-btn">Add to Core</a>
-                            <a href="#" class="trial-btn">1hr Trial</a>
-                        </div>
-                    </div>
-                </div>
             </div>
         </section>
         
@@ -1133,6 +1134,20 @@
             <p class="section-subtitle" style="text-align: center; margin-bottom: 40px; color: rgba(255,255,255,0.7);">Save when you buy multiple personas together</p>
             
             <div class="bundle-grid">
+                <!-- Creator Toolkit -->
+                <div class="bundle-card" style="border: 2px solid var(--premium);">
+                    <h3>Creator Toolkit</h3>
+                    <div class="bundle-price">$179</div>
+                    <div class="bundle-savings">Save $40 vs buying separately</div>
+                    <ul class="bundle-features">
+                        <li>Storyteller AI (Video Content)</li>
+                        <li>Ghostwriter AI (Writing Partner)</li>
+                        <li>Muse AI (Creative Assistant)</li>
+                        <li>Explorer AI (Curiosity Driver)</li>
+                    </ul>
+                    <a href="#" class="buy-btn premium">Get This Bundle</a>
+                </div>
+                
                 <!-- Creative Pack -->
                 <div class="bundle-card">
                     <h3>Creative Pack</h3>
@@ -1173,27 +1188,13 @@
                     <a href="#" class="buy-btn">Get This Bundle</a>
                 </div>
                 
-                <!-- Creator Toolkit -->
-                <div class="bundle-card">
-                    <h3>Creator Toolkit</h3>
-                    <div class="bundle-price">$179</div>
-                    <div class="bundle-savings">Save $40 vs buying separately</div>
-                    <ul class="bundle-features">
-                        <li>Ghostwriter AI</li>
-                        <li>Muse AI</li>
-                        <li>Explorer AI</li>
-                        <li>Storyteller AI</li>
-                    </ul>
-                    <a href="#" class="buy-btn">Get This Bundle</a>
-                </div>
-                
                 <!-- Complete Vault -->
                 <div class="bundle-card" style="border: 2px solid var(--premium);">
                     <h3>Complete Vault</h3>
-                    <div class="bundle-price">$129</div>
-                    <div class="bundle-savings">Save $100+ vs buying separately</div>
+                    <div class="bundle-price">$179</div>
+                    <div class="bundle-savings">Save $150+ vs buying separately</div>
                     <ul class="bundle-features">
-                        <li>All 12 Personality Mods</li>
+                        <li>All 13 Personality Mods</li>
                         <li>Free future updates</li>
                         <li>Priority support</li>
                         <li>Early access to new personas</li>
@@ -1284,6 +1285,17 @@
     <script>
         // Card data with full descriptions and key features
         const cardData = {
+            storyteller: {
+                fullDescription: "Storyteller AI transforms your written words into engaging, narrated videos. It takes scripts, blogs, journals, or outlines and turns them into cinematic, voice-acted visual content—perfect for creators, educators, YouTubers, or anyone building a digital brand. It's your AI-powered media studio in a box.",
+                keyFeatures: [
+                    "Auto-generates voiceover with realistic tone using TTS (e.g. ElevenLabs or Coqui XTTS)",
+                    "Automatically selects visuals or renders scenes via templates or prompts",
+                    "Outputs export-ready video formats (MP4/WebM) with optional subtitles",
+                    "Supports script input, blog URLs, or freeform journaling",
+                    "Ideal for explainer videos, memoir narrations, podcast clips, and YouTube Shorts",
+                    "Bonus: Future add-on support for avatar-style animations (D-ID / SadTalker)"
+                ]
+            },
             muse: {
                 fullDescription: "Muse AI acts as your creative muse—offering prompts, critiques, and aesthetic insights for visual projects, storyboarding, brand ideation, and artistic collaboration. It blends imagination with structure to help spark originality, mood, and engaging visuals.",
                 keyFeatures: [
@@ -1390,17 +1402,6 @@
                     "Reflection prompts steeped in classic wisdom traditions",
                     "Long-form contemplative conversation flows",
                     "Encouragement toward slow thinking and self-alignment"
-                ]
-            },
-            storyteller: {
-                fullDescription: "Storyteller AI transforms your written words into engaging, narrated videos. It takes scripts, blogs, journals, or outlines and turns them into cinematic, voice-acted visual content—perfect for creators, educators, YouTubers, or anyone building a digital brand. It's your AI-powered media studio in a box.",
-                keyFeatures: [
-                    "Auto-generates voiceover with realistic tone using TTS (e.g. ElevenLabs or Coqui XTTS)",
-                    "Automatically selects visuals or renders scenes via templates or prompts",
-                    "Outputs export-ready video formats (MP4/WebM) with optional subtitles",
-                    "Supports script input, blog URLs, or freeform journaling",
-                    "Ideal for explainer videos, memoir narrations, podcast clips, and YouTube Shorts",
-                    "Bonus: Future add-on support for avatar-style animations (D-ID / SadTalker)"
                 ]
             }
         };
