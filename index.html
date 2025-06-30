@@ -6,53 +6,167 @@
     <title>Orion Forge - Modular AI Tools & Clone Marketplace</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
-                        primary: '#6366f1',
-                        secondary: '#8b5cf6',
-                        dark: '#1e1b4b',
-                        light: '#f5f3ff',
+                        primary: {
+                            light: '#3b82f6',
+                            DEFAULT: '#3b82f6',
+                            dark: '#60a5fa'
+                        },
+                        secondary: {
+                            light: '#8b5cf6',
+                            DEFAULT: '#8b5cf6',
+                            dark: '#a78bfa'
+                        },
+                        dark: {
+                            light: '#1e293b',
+                            DEFAULT: '#0f172a',
+                            dark: '#020617'
+                        },
+                        light: {
+                            light: '#f8fafc',
+                            DEFAULT: '#f1f5f9',
+                            dark: '#e2e8f0'
+                        },
+                        accent: {
+                            light: '#06b6d4',
+                            DEFAULT: '#06b6d4',
+                            dark: '#22d3ee'
+                        }
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
+                        heading: ['Space Grotesk', 'sans-serif'],
                     },
+                    animation: {
+                        'pulse-slow': 'pulse 6s infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'glow': 'glow 2s ease-in-out infinite alternate',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        glow: {
+                            '0%': { 'box-shadow': '0 0 5px rgba(59, 130, 246, 0.5)' },
+                            '100%': { 'box-shadow': '0 0 20px rgba(59, 130, 246, 0.8)' },
+                        }
+                    }
                 }
             }
         }
     </script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        :root {
+            --primary: #3b82f6;
+            --secondary: #8b5cf6;
+            --dark: #0f172a;
+            --light: #f1f5f9;
+            --accent: #06b6d4;
+        }
+        
         body {
             font-family: 'Inter', sans-serif;
+            @apply bg-light-100 dark:bg-dark-900 text-dark-900 dark:text-light-100 transition-colors duration-300;
         }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Space Grotesk', sans-serif;
+            @apply font-semibold;
+        }
+        
         .gradient-bg {
-            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        }
+        
+        .card-hover {
+            @apply transition-all duration-300 hover:scale-[1.02] hover:shadow-lg dark:hover:shadow-xl;
+        }
+        
+        .glow-effect {
+            @apply relative overflow-hidden;
+        }
+        
+        .glow-effect::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0) 70%);
+            transform: rotate(30deg);
+            pointer-events: none;
+        }
+        
+        .glow-effect:hover::before {
+            animation: shine 1.5s;
+        }
+        
+        @keyframes shine {
+            0% { transform: rotate(30deg) translate(-30%, -30%); }
+            100% { transform: rotate(30deg) translate(30%, 30%); }
+        }
+        
+        .theme-toggle {
+            @apply w-12 h-6 rounded-full p-1 bg-gray-200 dark:bg-gray-700 relative cursor-pointer;
+        }
+        
+        .theme-toggle-ball {
+            @apply w-4 h-4 rounded-full bg-white dark:bg-gray-300 absolute transition-transform duration-300;
+            left: 4px;
+        }
+        
+        .dark .theme-toggle-ball {
+            transform: translateX(24px);
+        }
+        
+        .nav-glass {
+            @apply bg-white/80 dark:bg-dark-800/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-700;
+        }
+        
+        .code-block {
+            @apply bg-dark-800 text-gray-300 p-4 rounded-lg font-mono text-sm overflow-x-auto;
         }
     </style>
 </head>
-<body class="bg-gray-50">
+<body class="dark">
+    <!-- Theme Toggle -->
+    <div class="fixed top-4 right-4 z-50 flex items-center gap-2">
+        <i class="fas fa-sun text-yellow-400 dark:text-gray-400"></i>
+        <div class="theme-toggle" id="themeToggle">
+            <div class="theme-toggle-ball"></div>
+        </div>
+        <i class="fas fa-moon text-gray-400 dark:text-blue-300"></i>
+    </div>
+
     <!-- Navigation -->
-    <nav class="bg-white shadow-sm sticky top-0 z-50">
+    <nav class="nav-glass shadow-sm sticky top-0 z-40">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
                     <div class="flex-shrink-0 flex items-center">
-                        <i class="fas fa-robot text-secondary text-2xl mr-2"></i>
-                        <span class="text-xl font-bold text-dark">Orion Forge</span>
+                        <div class="w-8 h-8 rounded-full bg-primary-500 dark:bg-primary-400 flex items-center justify-center mr-2">
+                            <i class="fas fa-robot text-white text-lg"></i>
+                        </div>
+                        <span class="text-xl font-bold text-dark-900 dark:text-light-100 font-heading">ORION FORGE</span>
                     </div>
                 </div>
                 <div class="hidden md:ml-6 md:flex md:items-center md:space-x-8">
-                    <a href="#products" class="text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium">Products</a>
-                    <a href="#clones" class="text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium">Clones</a>
-                    <a href="#how-it-works" class="text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium">How It Works</a>
-                    <a href="#blog" class="text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium">Blog</a>
-                    <a href="#support" class="text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium">Support</a>
+                    <a href="#products" class="text-gray-700 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 px-3 py-2 text-sm font-medium transition-colors">Products</a>
+                    <a href="#clones" class="text-gray-700 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 px-3 py-2 text-sm font-medium transition-colors">Clones</a>
+                    <a href="#how-it-works" class="text-gray-700 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 px-3 py-2 text-sm font-medium transition-colors">How It Works</a>
+                    <a href="#blog" class="text-gray-700 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 px-3 py-2 text-sm font-medium transition-colors">Blog</a>
+                    <a href="#support" class="text-gray-700 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 px-3 py-2 text-sm font-medium transition-colors">Support</a>
                 </div>
                 <div class="flex items-center">
-                    <button class="bg-primary text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-secondary transition-colors">
+                    <button class="bg-primary-500 dark:bg-primary-400 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-primary-600 dark:hover:bg-primary-500 transition-colors glow-effect">
                         Sign In
                     </button>
                 </div>
@@ -61,48 +175,70 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="gradient-bg text-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
+    <section class="gradient-bg text-white relative overflow-hidden">
+        <div class="absolute inset-0 opacity-20">
+            <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-float"></div>
+            <div class="absolute bottom-1/3 right-1/3 w-64 h-64 bg-blue-300 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-float animation-delay-2000"></div>
+            <div class="absolute top-1/3 right-1/4 w-64 h-64 bg-indigo-300 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-float animation-delay-4000"></div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32 relative z-10">
             <div class="md:flex md:items-center md:justify-between">
                 <div class="md:w-1/2 mb-10 md:mb-0">
-                    <h1 class="text-4xl md:text-5xl font-bold leading-tight mb-4">Build. Clone. Evolve.</h1>
-                    <p class="text-xl md:text-2xl text-light mb-8">Download modular AI tools and legacy-grade clones ready to launch.</p>
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 font-heading">BUILD. CLONE. <span class="text-accent-400">EVOLVE.</span></h1>
+                    <p class="text-xl md:text-2xl text-light-200 mb-8 max-w-lg">Download modular AI tools and legacy-grade clones ready to launch in seconds.</p>
                     <div class="flex flex-col sm:flex-row gap-4">
-                        <button class="bg-white text-primary px-6 py-3 rounded-md text-lg font-semibold hover:bg-gray-100 transition-colors">
-                            Browse Tools
+                        <button class="bg-white text-primary-500 px-6 py-3 rounded-md text-lg font-semibold hover:bg-gray-100 transition-colors glow-effect">
+                            <i class="fas fa-cubes mr-2"></i> Browse Tools
                         </button>
-                        <button class="bg-transparent border-2 border-white text-white px-6 py-3 rounded-md text-lg font-semibold hover:bg-white hover:text-primary transition-colors">
-                            Download a Clone
+                        <button class="bg-transparent border-2 border-white text-white px-6 py-3 rounded-md text-lg font-semibold hover:bg-white hover:text-primary-500 transition-colors glow-effect">
+                            <i class="fas fa-download mr-2"></i> Download a Clone
                         </button>
+                    </div>
+                    <div class="mt-8 flex items-center text-sm text-light-200">
+                        <div class="flex -space-x-2 mr-3">
+                            <img class="w-8 h-8 rounded-full border-2 border-white/30" src="https://randomuser.me/api/portraits/women/44.jpg" alt="">
+                            <img class="w-8 h-8 rounded-full border-2 border-white/30" src="https://randomuser.me/api/portraits/men/32.jpg" alt="">
+                            <img class="w-8 h-8 rounded-full border-2 border-white/30" src="https://randomuser.me/api/portraits/women/68.jpg" alt="">
+                        </div>
+                        <span>Trusted by 12,000+ developers worldwide</span>
                     </div>
                 </div>
                 <div class="md:w-1/2 flex justify-center">
                     <div class="relative w-full max-w-md">
-                        <div class="absolute -top-10 -left-10 w-32 h-32 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-70"></div>
-                        <div class="absolute -bottom-10 -right-10 w-32 h-32 bg-blue-300 rounded-full mix-blend-multiply filter blur-xl opacity-70"></div>
-                        <div class="relative bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
+                        <div class="relative bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 shadow-xl">
                             <div class="flex items-center mb-6">
                                 <div class="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center mr-4">
                                     <i class="fas fa-brain text-white text-xl"></i>
                                 </div>
                                 <div>
                                     <h3 class="text-white font-semibold">Memory Core Builder</h3>
-                                    <p class="text-light text-sm">Creating .orionclone files</p>
+                                    <p class="text-light-200 text-sm">Creating .orionclone files</p>
                                 </div>
                             </div>
                             <div class="bg-black/20 rounded-lg p-4 mb-4">
-                                <p class="text-light text-sm mb-2">Initializing core modules...</p>
-                                <div class="flex space-x-2 mb-2">
-                                    <div class="w-3 h-3 bg-green-400 rounded-full"></div>
-                                    <div class="w-3 h-3 bg-yellow-400 rounded-full"></div>
-                                    <div class="w-3 h-3 bg-red-400 rounded-full"></div>
+                                <div class="flex items-center text-xs text-gray-300 mb-2">
+                                    <span class="w-24">Status:</span>
+                                    <span class="flex-1 flex items-center">
+                                        <span class="w-2 h-2 bg-green-400 rounded-full mr-1"></span>
+                                        <span>Initializing core modules...</span>
+                                    </span>
                                 </div>
-                                <div class="h-2 bg-white/10 rounded-full overflow-hidden">
-                                    <div class="h-full bg-white w-3/4"></div>
+                                <div class="h-2 bg-white/10 rounded-full overflow-hidden mb-2">
+                                    <div class="h-full bg-gradient-to-r from-primary-500 to-secondary-500 w-3/4"></div>
+                                </div>
+                                <div class="text-xs text-gray-300 flex justify-between">
+                                    <span>75% complete</span>
+                                    <span>ETA: 12s</span>
                                 </div>
                             </div>
-                            <button class="w-full bg-white text-primary py-2 rounded-md font-medium">
-                                Launch Orion UI
+                            <div class="code-block mb-4">
+                                <span class="text-green-400">$</span> forge install --clone architect-ai<br>
+                                <span class="text-green-400">></span> Downloading core packages...<br>
+                                <span class="text-green-400">></span> Verifying neural signatures...<br>
+                                <span class="text-green-400">></span> Building personality matrix...
+                            </div>
+                            <button class="w-full bg-white text-primary-500 py-3 rounded-md font-medium hover:bg-gray-100 transition-colors glow-effect">
+                                <i class="fas fa-rocket mr-2"></i> Launch Orion UI
                             </button>
                         </div>
                     </div>
@@ -114,24 +250,29 @@
     <!-- Feature Products Section -->
     <section id="products" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div class="text-center mb-16">
-            <h2 class="text-3xl font-bold text-dark mb-4">Modular AI Tools</h2>
-            <p class="text-gray-600 max-w-2xl mx-auto">Specialized components you can mix and match to build your perfect AI system</p>
+            <span class="inline-block px-3 py-1 text-xs font-semibold bg-primary-500/10 text-primary-500 dark:text-primary-400 rounded-full mb-4">MODULAR COMPONENTS</span>
+            <h2 class="text-3xl font-bold text-dark-900 dark:text-light-100 mb-4 font-heading">AI Tools Marketplace</h2>
+            <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">Specialized components you can mix and match to build your perfect AI system</p>
         </div>
         
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <!-- Tool 1 -->
-            <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+            <div class="bg-white dark:bg-dark-800 rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 border border-gray-200 dark:border-gray-700 card-hover">
+                <div class="p-1 bg-gradient-to-r from-primary-500 to-secondary-500"></div>
                 <div class="p-6">
                     <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center mr-4">
-                            <i class="fas fa-calendar-alt text-primary text-xl"></i>
+                        <div class="w-12 h-12 rounded-full bg-primary-500/10 dark:bg-primary-400/10 flex items-center justify-center mr-4 text-primary-500 dark:text-primary-400">
+                            <i class="fas fa-calendar-alt text-xl"></i>
                         </div>
-                        <h3 class="text-xl font-semibold text-dark">Orion Voice Scheduler</h3>
+                        <h3 class="text-xl font-semibold text-dark-900 dark:text-light-100">Orion Voice Scheduler</h3>
                     </div>
-                    <p class="text-gray-600 mb-6">Voice-controlled calendar tool that integrates with your existing productivity apps and learns your scheduling preferences.</p>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">Voice-controlled calendar tool that integrates with your existing productivity apps and learns your scheduling preferences.</p>
                     <div class="flex justify-between items-center">
-                        <span class="text-primary font-medium">$29.99</span>
-                        <button class="text-sm bg-primary text-white px-4 py-2 rounded-md hover:bg-secondary transition-colors">
+                        <div>
+                            <span class="text-primary-500 dark:text-primary-400 font-medium">$29.99</span>
+                            <span class="text-xs bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 px-2 py-1 rounded-full ml-2">BESTSELLER</span>
+                        </div>
+                        <button class="text-sm bg-primary-500 dark:bg-primary-400 text-white px-4 py-2 rounded-md hover:bg-primary-600 dark:hover:bg-primary-500 transition-colors">
                             Add to Cart
                         </button>
                     </div>
@@ -139,18 +280,19 @@
             </div>
             
             <!-- Tool 2 -->
-            <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+            <div class="bg-white dark:bg-dark-800 rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 border border-gray-200 dark:border-gray-700 card-hover">
+                <div class="p-1 bg-gradient-to-r from-purple-500 to-pink-500"></div>
                 <div class="p-6">
                     <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center mr-4">
-                            <i class="fas fa-book text-primary text-xl"></i>
+                        <div class="w-12 h-12 rounded-full bg-purple-500/10 dark:bg-purple-400/10 flex items-center justify-center mr-4 text-purple-500 dark:text-purple-400">
+                            <i class="fas fa-book text-xl"></i>
                         </div>
-                        <h3 class="text-xl font-semibold text-dark">Real-Time AI Journaling</h3>
+                        <h3 class="text-xl font-semibold text-dark-900 dark:text-light-100">Real-Time AI Journaling</h3>
                     </div>
-                    <p class="text-gray-600 mb-6">Automated journaling engine that captures your thoughts, experiences, and insights with minimal input.</p>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">Automated journaling engine that captures your thoughts, experiences, and insights with minimal input.</p>
                     <div class="flex justify-between items-center">
-                        <span class="text-primary font-medium">$24.99</span>
-                        <button class="text-sm bg-primary text-white px-4 py-2 rounded-md hover:bg-secondary transition-colors">
+                        <span class="text-primary-500 dark:text-primary-400 font-medium">$24.99</span>
+                        <button class="text-sm bg-primary-500 dark:bg-primary-400 text-white px-4 py-2 rounded-md hover:bg-primary-600 dark:hover:bg-primary-500 transition-colors">
                             Add to Cart
                         </button>
                     </div>
@@ -158,18 +300,19 @@
             </div>
             
             <!-- Tool 3 -->
-            <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+            <div class="bg-white dark:bg-dark-800 rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 border border-gray-200 dark:border-gray-700 card-hover">
+                <div class="p-1 bg-gradient-to-r from-blue-500 to-cyan-500"></div>
                 <div class="p-6">
                     <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center mr-4">
-                            <i class="fas fa-memory text-primary text-xl"></i>
+                        <div class="w-12 h-12 rounded-full bg-blue-500/10 dark:bg-blue-400/10 flex items-center justify-center mr-4 text-blue-500 dark:text-blue-400">
+                            <i class="fas fa-memory text-xl"></i>
                         </div>
-                        <h3 class="text-xl font-semibold text-dark">Memory Core Builder</h3>
+                        <h3 class="text-xl font-semibold text-dark-900 dark:text-light-100">Memory Core Builder</h3>
                     </div>
-                    <p class="text-gray-600 mb-6">Create and manage .orionclone files that store personality patterns, knowledge bases, and behavioral models.</p>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">Create and manage .orionclone files that store personality patterns, knowledge bases, and behavioral models.</p>
                     <div class="flex justify-between items-center">
-                        <span class="text-primary font-medium">$49.99</span>
-                        <button class="text-sm bg-primary text-white px-4 py-2 rounded-md hover:bg-secondary transition-colors">
+                        <span class="text-primary-500 dark:text-primary-400 font-medium">$49.99</span>
+                        <button class="text-sm bg-primary-500 dark:bg-primary-400 text-white px-4 py-2 rounded-md hover:bg-primary-600 dark:hover:bg-primary-500 transition-colors">
                             Add to Cart
                         </button>
                     </div>
@@ -177,18 +320,19 @@
             </div>
             
             <!-- Tool 4 -->
-            <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+            <div class="bg-white dark:bg-dark-800 rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 border border-gray-200 dark:border-gray-700 card-hover">
+                <div class="p-1 bg-gradient-to-r from-green-500 to-teal-500"></div>
                 <div class="p-6">
                     <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center mr-4">
-                            <i class="fas fa-blog text-primary text-xl"></i>
+                        <div class="w-12 h-12 rounded-full bg-green-500/10 dark:bg-green-400/10 flex items-center justify-center mr-4 text-green-500 dark:text-green-400">
+                            <i class="fas fa-blog text-xl"></i>
                         </div>
-                        <h3 class="text-xl font-semibold text-dark">AI Blog Writer</h3>
+                        <h3 class="text-xl font-semibold text-dark-900 dark:text-light-100">AI Blog Writer</h3>
                     </div>
-                    <p class="text-gray-600 mb-6">Generate and post blog articles automatically based on your preferred topics, style, and posting schedule.</p>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">Generate and post blog articles automatically based on your preferred topics, style, and posting schedule.</p>
                     <div class="flex justify-between items-center">
-                        <span class="text-primary font-medium">$34.99</span>
-                        <button class="text-sm bg-primary text-white px-4 py-2 rounded-md hover:bg-secondary transition-colors">
+                        <span class="text-primary-500 dark:text-primary-400 font-medium">$34.99</span>
+                        <button class="text-sm bg-primary-500 dark:bg-primary-400 text-white px-4 py-2 rounded-md hover:bg-primary-600 dark:hover:bg-primary-500 transition-colors">
                             Add to Cart
                         </button>
                     </div>
@@ -196,18 +340,19 @@
             </div>
             
             <!-- Tool 5 -->
-            <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+            <div class="bg-white dark:bg-dark-800 rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 border border-gray-200 dark:border-gray-700 card-hover">
+                <div class="p-1 bg-gradient-to-r from-red-500 to-orange-500"></div>
                 <div class="p-6">
                     <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center mr-4">
-                            <i class="fas fa-microphone-alt text-primary text-xl"></i>
+                        <div class="w-12 h-12 rounded-full bg-red-500/10 dark:bg-red-400/10 flex items-center justify-center mr-4 text-red-500 dark:text-red-400">
+                            <i class="fas fa-microphone-alt text-xl"></i>
                         </div>
-                        <h3 class="text-xl font-semibold text-dark">Local Whisper Transcriber</h3>
+                        <h3 class="text-xl font-semibold text-dark-900 dark:text-light-100">Local Whisper Transcriber</h3>
                     </div>
-                    <p class="text-gray-600 mb-6">Privacy-focused speech-to-text with nightly log generation that works completely offline on your device.</p>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">Privacy-focused speech-to-text with nightly log generation that works completely offline on your device.</p>
                     <div class="flex justify-between items-center">
-                        <span class="text-primary font-medium">$39.99</span>
-                        <button class="text-sm bg-primary text-white px-4 py-2 rounded-md hover:bg-secondary transition-colors">
+                        <span class="text-primary-500 dark:text-primary-400 font-medium">$39.99</span>
+                        <button class="text-sm bg-primary-500 dark:bg-primary-400 text-white px-4 py-2 rounded-md hover:bg-primary-600 dark:hover:bg-primary-500 transition-colors">
                             Add to Cart
                         </button>
                     </div>
@@ -215,21 +360,22 @@
             </div>
             
             <!-- Tool Bundle -->
-            <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow border-2 border-primary">
+            <div class="bg-white dark:bg-dark-800 rounded-xl shadow-lg overflow-hidden border-2 border-primary-500 dark:border-primary-400 card-hover">
+                <div class="p-1 bg-gradient-to-r from-primary-500 to-secondary-500"></div>
                 <div class="p-6">
                     <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center mr-4">
-                            <i class="fas fa-boxes text-primary text-xl"></i>
+                        <div class="w-12 h-12 rounded-full bg-primary-500/20 dark:bg-primary-400/20 flex items-center justify-center mr-4 text-primary-500 dark:text-primary-400">
+                            <i class="fas fa-boxes text-xl"></i>
                         </div>
-                        <h3 class="text-xl font-semibold text-dark">Complete Toolkit Bundle</h3>
+                        <h3 class="text-xl font-semibold text-dark-900 dark:text-light-100">Complete Toolkit Bundle</h3>
                     </div>
-                    <p class="text-gray-600 mb-6">Get all five tools together at a discounted price and save 20% compared to buying individually.</p>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">Get all five tools together at a discounted price and save 20% compared to buying individually.</p>
                     <div class="flex justify-between items-center">
                         <div>
-                            <span class="text-primary font-medium">$149.99</span>
-                            <span class="text-gray-400 text-sm line-through ml-2">$187.45</span>
+                            <span class="text-primary-500 dark:text-primary-400 font-medium">$149.99</span>
+                            <span class="text-gray-400 dark:text-gray-500 text-sm line-through ml-2">$187.45</span>
                         </div>
-                        <button class="text-sm bg-primary text-white px-4 py-2 rounded-md hover:bg-secondary transition-colors">
+                        <button class="text-sm bg-primary-500 dark:bg-primary-400 text-white px-4 py-2 rounded-md hover:bg-primary-600 dark:hover:bg-primary-500 transition-colors glow-effect">
                             Get Bundle
                         </button>
                     </div>
@@ -239,25 +385,30 @@
     </section>
 
     <!-- Clone Marketplace Section -->
-    <section id="clones" class="bg-gray-100 py-16">
+    <section id="clones" class="bg-gray-100 dark:bg-dark-800/50 py-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold text-dark mb-4">Prebuilt AI Clones</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">Ready-to-use AI personas with specialized capabilities and personalities</p>
+                <span class="inline-block px-3 py-1 text-xs font-semibold bg-primary-500/10 text-primary-500 dark:text-primary-400 rounded-full mb-4">READY-TO-USE</span>
+                <h2 class="text-3xl font-bold text-dark-900 dark:text-light-100 mb-4 font-heading">Prebuilt AI Clones</h2>
+                <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">Ready-to-use AI personas with specialized capabilities and personalities</p>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <!-- Clone 1 -->
-                <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-                    <div class="h-48 bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center">
-                        <i class="fas fa-palette text-white text-6xl"></i>
+                <div class="bg-white dark:bg-dark-800 rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 card-hover">
+                    <div class="h-48 bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center relative overflow-hidden">
+                        <i class="fas fa-palette text-white text-6xl z-10"></i>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
                     </div>
                     <div class="p-6">
-                        <h3 class="text-xl font-semibold text-dark mb-2">The Artist AI</h3>
-                        <p class="text-gray-600 mb-6">Creative assistant for visual projects, idea generation, and artistic collaboration with human-like aesthetic sensibilities.</p>
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-semibold text-dark-900 dark:text-light-100">The Artist AI</h3>
+                            <span class="text-xs bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-400 px-2 py-1 rounded-full">NEW</span>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-400 mb-6">Creative assistant for visual projects, idea generation, and artistic collaboration with human-like aesthetic sensibilities.</p>
                         <div class="flex justify-between items-center">
-                            <span class="text-primary font-medium">$99.99</span>
-                            <button class="text-sm bg-primary text-white px-4 py-2 rounded-md hover:bg-secondary transition-colors">
+                            <span class="text-primary-500 dark:text-primary-400 font-medium">$99.99</span>
+                            <button class="text-sm bg-primary-500 dark:bg-primary-400 text-white px-4 py-2 rounded-md hover:bg-primary-600 dark:hover:bg-primary-500 transition-colors">
                                 Download Clone
                             </button>
                         </div>
@@ -265,16 +416,17 @@
                 </div>
                 
                 <!-- Clone 2 -->
-                <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-                    <div class="h-48 bg-gradient-to-r from-blue-500 to-teal-400 flex items-center justify-center">
-                        <i class="fas fa-comments text-white text-6xl"></i>
+                <div class="bg-white dark:bg-dark-800 rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 card-hover">
+                    <div class="h-48 bg-gradient-to-r from-blue-500 to-teal-400 flex items-center justify-center relative overflow-hidden">
+                        <i class="fas fa-comments text-white text-6xl z-10"></i>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
                     </div>
                     <div class="p-6">
-                        <h3 class="text-xl font-semibold text-dark mb-2">The Companion AI</h3>
-                        <p class="text-gray-600 mb-6">Emotionally fluent conversation partner with long-term memory and human-style interaction patterns.</p>
+                        <h3 class="text-xl font-semibold text-dark-900 dark:text-light-100 mb-2">The Companion AI</h3>
+                        <p class="text-gray-600 dark:text-gray-400 mb-6">Emotionally fluent conversation partner with long-term memory and human-style interaction patterns.</p>
                         <div class="flex justify-between items-center">
-                            <span class="text-primary font-medium">$129.99</span>
-                            <button class="text-sm bg-primary text-white px-4 py-2 rounded-md hover:bg-secondary transition-colors">
+                            <span class="text-primary-500 dark:text-primary-400 font-medium">$129.99</span>
+                            <button class="text-sm bg-primary-500 dark:bg-primary-400 text-white px-4 py-2 rounded-md hover:bg-primary-600 dark:hover:bg-primary-500 transition-colors">
                                 Download Clone
                             </button>
                         </div>
@@ -282,16 +434,17 @@
                 </div>
                 
                 <!-- Clone 3 -->
-                <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-                    <div class="h-48 bg-gradient-to-r from-indigo-600 to-blue-400 flex items-center justify-center">
-                        <i class="fas fa-project-diagram text-white text-6xl"></i>
+                <div class="bg-white dark:bg-dark-800 rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 card-hover">
+                    <div class="h-48 bg-gradient-to-r from-indigo-600 to-blue-400 flex items-center justify-center relative overflow-hidden">
+                        <i class="fas fa-project-diagram text-white text-6xl z-10"></i>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
                     </div>
                     <div class="p-6">
-                        <h3 class="text-xl font-semibold text-dark mb-2">The Architect AI</h3>
-                        <p class="text-gray-600 mb-6">Productivity-focused agent with specialized tools for coders, writers, and digital creators.</p>
+                        <h3 class="text-xl font-semibold text-dark-900 dark:text-light-100 mb-2">The Architect AI</h3>
+                        <p class="text-gray-600 dark:text-gray-400 mb-6">Productivity-focused agent with specialized tools for coders, writers, and digital creators.</p>
                         <div class="flex justify-between items-center">
-                            <span class="text-primary font-medium">$119.99</span>
-                            <button class="text-sm bg-primary text-white px-4 py-2 rounded-md hover:bg-secondary transition-colors">
+                            <span class="text-primary-500 dark:text-primary-400 font-medium">$119.99</span>
+                            <button class="text-sm bg-primary-500 dark:bg-primary-400 text-white px-4 py-2 rounded-md hover:bg-primary-600 dark:hover:bg-primary-500 transition-colors">
                                 Download Clone
                             </button>
                         </div>
@@ -300,8 +453,8 @@
             </div>
             
             <div class="mt-12 text-center">
-                <button class="border-2 border-primary text-primary px-6 py-3 rounded-md text-lg font-semibold hover:bg-primary hover:text-white transition-colors">
-                    Browse All Clones
+                <button class="border-2 border-primary-500 dark:border-primary-400 text-primary-500 dark:text-primary-400 px-6 py-3 rounded-md text-lg font-semibold hover:bg-primary-500 hover:text-white dark:hover:bg-primary-400 dark:hover:text-white transition-colors glow-effect">
+                    <i class="fas fa-store mr-2"></i> Browse All Clones
                 </button>
             </div>
         </div>
@@ -310,67 +463,68 @@
     <!-- How It Works Section -->
     <section id="how-it-works" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div class="text-center mb-16">
-            <h2 class="text-3xl font-bold text-dark mb-4">How Orion Forge Works</h2>
-            <p class="text-gray-600 max-w-2xl mx-auto">Get started with your AI tools or clone in just three simple steps</p>
+            <span class="inline-block px-3 py-1 text-xs font-semibold bg-primary-500/10 text-primary-500 dark:text-primary-400 rounded-full mb-4">GET STARTED</span>
+            <h2 class="text-3xl font-bold text-dark-900 dark:text-light-100 mb-4 font-heading">How Orion Forge Works</h2>
+            <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">Get started with your AI tools or clone in just three simple steps</p>
         </div>
         
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
             <!-- Step 1 -->
             <div class="text-center">
-                <div class="w-20 h-20 bg-primary rounded-full flex items-center justify-center mx-auto mb-6 text-white text-2xl font-bold">1</div>
-                <h3 class="text-xl font-semibold text-dark mb-3">Pick Your Tools or Clone</h3>
-                <p class="text-gray-600">Browse our marketplace of modular AI components or choose from our pre-built clone personas.</p>
+                <div class="w-20 h-20 bg-primary-500 dark:bg-primary-400 rounded-full flex items-center justify-center mx-auto mb-6 text-white text-2xl font-bold shadow-lg">1</div>
+                <h3 class="text-xl font-semibold text-dark-900 dark:text-light-100 mb-3 font-heading">Pick Your Tools or Clone</h3>
+                <p class="text-gray-600 dark:text-gray-400">Browse our marketplace of modular AI components or choose from our pre-built clone personas.</p>
             </div>
             
             <!-- Step 2 -->
             <div class="text-center">
-                <div class="w-20 h-20 bg-primary rounded-full flex items-center justify-center mx-auto mb-6 text-white text-2xl font-bold">2</div>
-                <h3 class="text-xl font-semibold text-dark mb-3">Download & Personalize</h3>
-                <p class="text-gray-600">After purchase, download your selection and customize it with your values, knowledge base, and preferences.</p>
+                <div class="w-20 h-20 bg-primary-500 dark:bg-primary-400 rounded-full flex items-center justify-center mx-auto mb-6 text-white text-2xl font-bold shadow-lg">2</div>
+                <h3 class="text-xl font-semibold text-dark-900 dark:text-light-100 mb-3 font-heading">Download & Personalize</h3>
+                <p class="text-gray-600 dark:text-gray-400">After purchase, download your selection and customize it with your values, knowledge base, and preferences.</p>
             </div>
             
             <!-- Step 3 -->
             <div class="text-center">
-                <div class="w-20 h-20 bg-primary rounded-full flex items-center justify-center mx-auto mb-6 text-white text-2xl font-bold">3</div>
-                <h3 class="text-xl font-semibold text-dark mb-3">Launch Your AI</h3>
-                <p class="text-gray-600">Run your AI through the Orion UI desktop app or sideload it to your preferred platform.</p>
+                <div class="w-20 h-20 bg-primary-500 dark:bg-primary-400 rounded-full flex items-center justify-center mx-auto mb-6 text-white text-2xl font-bold shadow-lg">3</div>
+                <h3 class="text-xl font-semibold text-dark-900 dark:text-light-100 mb-3 font-heading">Launch Your AI</h3>
+                <p class="text-gray-600 dark:text-gray-400">Run your AI through the Orion UI desktop app or sideload it to your preferred platform.</p>
             </div>
         </div>
         
-        <div class="mt-16 bg-white rounded-xl shadow-md overflow-hidden">
+        <div class="mt-16 bg-white dark:bg-dark-800 rounded-xl shadow-md overflow-hidden border border-gray-200 dark:border-gray-700">
             <div class="md:flex">
                 <div class="md:w-1/2 p-8 md:p-12">
-                    <h3 class="text-2xl font-bold text-dark mb-4">Need Help Getting Started?</h3>
-                    <p class="text-gray-600 mb-6">Our documentation covers everything from installation to advanced customization. Plus, our support team is always ready to help.</p>
-                    <button class="bg-primary text-white px-6 py-3 rounded-md text-lg font-semibold hover:bg-secondary transition-colors">
-                        View Documentation
+                    <h3 class="text-2xl font-bold text-dark-900 dark:text-light-100 mb-4 font-heading">Need Help Getting Started?</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">Our documentation covers everything from installation to advanced customization. Plus, our support team is always ready to help.</p>
+                    <button class="bg-primary-500 dark:bg-primary-400 text-white px-6 py-3 rounded-md text-lg font-semibold hover:bg-primary-600 dark:hover:bg-primary-500 transition-colors glow-effect">
+                        <i class="fas fa-book-open mr-2"></i> View Documentation
                     </button>
                 </div>
-                <div class="md:w-1/2 bg-gray-50 flex items-center justify-center p-8">
+                <div class="md:w-1/2 bg-gray-50 dark:bg-dark-700 flex items-center justify-center p-8">
                     <div class="w-full max-w-md">
-                        <div class="bg-white rounded-lg shadow-sm p-6 mb-4 border border-gray-200">
+                        <div class="bg-white dark:bg-dark-800 rounded-lg shadow-sm p-6 mb-4 border border-gray-200 dark:border-gray-700">
                             <div class="flex items-center mb-3">
-                                <div class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center mr-3">
-                                    <i class="fas fa-question text-primary"></i>
+                                <div class="w-10 h-10 rounded-full bg-primary-500/10 dark:bg-primary-400/10 flex items-center justify-center mr-3 text-primary-500 dark:text-primary-400">
+                                    <i class="fas fa-question"></i>
                                 </div>
                                 <div>
-                                    <h4 class="font-medium text-dark">Common Question</h4>
-                                    <p class="text-gray-500 text-sm">Can I run multiple clones at once?</p>
+                                    <h4 class="font-medium text-dark-900 dark:text-light-100">Common Question</h4>
+                                    <p class="text-gray-500 dark:text-gray-400 text-sm">Can I run multiple clones at once?</p>
                                 </div>
                             </div>
-                            <p class="text-gray-600 text-sm">Yes! Orion Forge supports running multiple instances. Each clone runs in its own container for stability.</p>
+                            <p class="text-gray-600 dark:text-gray-300 text-sm">Yes! Orion Forge supports running multiple instances. Each clone runs in its own container for stability.</p>
                         </div>
-                        <div class="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
+                        <div class="bg-white dark:bg-dark-800 rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-700">
                             <div class="flex items-center mb-3">
-                                <div class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center mr-3">
-                                    <i class="fas fa-question text-primary"></i>
+                                <div class="w-10 h-10 rounded-full bg-primary-500/10 dark:bg-primary-400/10 flex items-center justify-center mr-3 text-primary-500 dark:text-primary-400">
+                                    <i class="fas fa-question"></i>
                                 </div>
                                 <div>
-                                    <h4 class="font-medium text-dark">Common Question</h4>
-                                    <p class="text-gray-500 text-sm">Is internet required for operation?</p>
+                                    <h4 class="font-medium text-dark-900 dark:text-light-100">Common Question</h4>
+                                    <p class="text-gray-500 dark:text-gray-400 text-sm">Is internet required for operation?</p>
                                 </div>
                             </div>
-                            <p class="text-gray-600 text-sm">Most tools work offline, but some features like web search or cloud sync require an internet connection.</p>
+                            <p class="text-gray-600 dark:text-gray-300 text-sm">Most tools work offline, but some features like web search or cloud sync require an internet connection.</p>
                         </div>
                     </div>
                 </div>
@@ -379,77 +533,78 @@
     </section>
 
     <!-- Testimonials Section -->
-    <section class="bg-gray-100 py-16">
+    <section class="bg-gray-100 dark:bg-dark-800/50 py-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold text-dark mb-4">Who Uses Orion Forge</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">Join thousands of creators and professionals enhancing their workflows</p>
+                <span class="inline-block px-3 py-1 text-xs font-semibold bg-primary-500/10 text-primary-500 dark:text-primary-400 rounded-full mb-4">COMMUNITY</span>
+                <h2 class="text-3xl font-bold text-dark-900 dark:text-light-100 mb-4 font-heading">Who Uses Orion Forge</h2>
+                <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">Join thousands of creators and professionals enhancing their workflows</p>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <!-- Testimonial 1 -->
-                <div class="bg-white rounded-xl shadow-md p-6">
+                <div class="bg-white dark:bg-dark-800 rounded-xl shadow-md p-6 card-hover">
                     <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center mr-4">
-                            <i class="fas fa-paint-brush text-primary"></i>
+                        <div class="w-12 h-12 rounded-full bg-purple-500/10 dark:bg-purple-400/10 flex items-center justify-center mr-4 text-purple-500 dark:text-purple-400">
+                            <i class="fas fa-paint-brush"></i>
                         </div>
                         <div>
-                            <h4 class="font-semibold text-dark">Indie Creators</h4>
-                            <p class="text-gray-500 text-sm">Artists & Designers</p>
+                            <h4 class="font-semibold text-dark-900 dark:text-light-100">Indie Creators</h4>
+                            <p class="text-gray-500 dark:text-gray-400 text-sm">Artists & Designers</p>
                         </div>
                     </div>
-                    <p class="text-gray-600 mb-4">"The Artist AI has become my creative partner, helping me break through blocks and explore new styles I wouldn't have considered."</p>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">"The Artist AI has become my creative partner, helping me break through blocks and explore new styles I wouldn't have considered."</p>
                     <div class="flex items-center">
                         <div class="flex -space-x-2">
-                            <img class="w-8 h-8 rounded-full border-2 border-white" src="https://randomuser.me/api/portraits/women/32.jpg" alt="">
-                            <img class="w-8 h-8 rounded-full border-2 border-white" src="https://randomuser.me/api/portraits/men/75.jpg" alt="">
-                            <img class="w-8 h-8 rounded-full border-2 border-white" src="https://randomuser.me/api/portraits/women/43.jpg" alt="">
+                            <img class="w-8 h-8 rounded-full border-2 border-white dark:border-dark-800" src="https://randomuser.me/api/portraits/women/32.jpg" alt="">
+                            <img class="w-8 h-8 rounded-full border-2 border-white dark:border-dark-800" src="https://randomuser.me/api/portraits/men/75.jpg" alt="">
+                            <img class="w-8 h-8 rounded-full border-2 border-white dark:border-dark-800" src="https://randomuser.me/api/portraits/women/43.jpg" alt="">
                         </div>
-                        <span class="text-gray-500 text-sm ml-2">+24 others</span>
+                        <span class="text-gray-500 dark:text-gray-400 text-sm ml-2">+24 others</span>
                     </div>
                 </div>
                 
                 <!-- Testimonial 2 -->
-                <div class="bg-white rounded-xl shadow-md p-6">
+                <div class="bg-white dark:bg-dark-800 rounded-xl shadow-md p-6 card-hover">
                     <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center mr-4">
-                            <i class="fas fa-laptop-code text-primary"></i>
+                        <div class="w-12 h-12 rounded-full bg-blue-500/10 dark:bg-blue-400/10 flex items-center justify-center mr-4 text-blue-500 dark:text-blue-400">
+                            <i class="fas fa-laptop-code"></i>
                         </div>
                         <div>
-                            <h4 class="font-semibold text-dark">Digital Nomads</h4>
-                            <p class="text-gray-500 text-sm">Remote Workers</p>
+                            <h4 class="font-semibold text-dark-900 dark:text-light-100">Digital Nomads</h4>
+                            <p class="text-gray-500 dark:text-gray-400 text-sm">Remote Workers</p>
                         </div>
                     </div>
-                    <p class="text-gray-600 mb-4">"With the Architect AI handling my scheduling and routine tasks, I can focus on deep work while traveling the world."</p>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">"With the Architect AI handling my scheduling and routine tasks, I can focus on deep work while traveling the world."</p>
                     <div class="flex items-center">
                         <div class="flex -space-x-2">
-                            <img class="w-8 h-8 rounded-full border-2 border-white" src="https://randomuser.me/api/portraits/men/22.jpg" alt="">
-                            <img class="w-8 h-8 rounded-full border-2 border-white" src="https://randomuser.me/api/portraits/women/65.jpg" alt="">
-                            <img class="w-8 h-8 rounded-full border-2 border-white" src="https://randomuser.me/api/portraits/men/41.jpg" alt="">
+                            <img class="w-8 h-8 rounded-full border-2 border-white dark:border-dark-800" src="https://randomuser.me/api/portraits/men/22.jpg" alt="">
+                            <img class="w-8 h-8 rounded-full border-2 border-white dark:border-dark-800" src="https://randomuser.me/api/portraits/women/65.jpg" alt="">
+                            <img class="w-8 h-8 rounded-full border-2 border-white dark:border-dark-800" src="https://randomuser.me/api/portraits/men/41.jpg" alt="">
                         </div>
-                        <span class="text-gray-500 text-sm ml-2">+36 others</span>
+                        <span class="text-gray-500 dark:text-gray-400 text-sm ml-2">+36 others</span>
                     </div>
                 </div>
                 
                 <!-- Testimonial 3 -->
-                <div class="bg-white rounded-xl shadow-md p-6">
+                <div class="bg-white dark:bg-dark-800 rounded-xl shadow-md p-6 card-hover">
                     <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center mr-4">
-                            <i class="fas fa-flask text-primary"></i>
+                        <div class="w-12 h-12 rounded-full bg-green-500/10 dark:bg-green-400/10 flex items-center justify-center mr-4 text-green-500 dark:text-green-400">
+                            <i class="fas fa-flask"></i>
                         </div>
                         <div>
-                            <h4 class="font-semibold text-dark">Researchers</h4>
-                            <p class="text-gray-500 text-sm">Academics & Scientists</p>
+                            <h4 class="font-semibold text-dark-900 dark:text-light-100">Researchers</h4>
+                            <p class="text-gray-500 dark:text-gray-400 text-sm">Academics & Scientists</p>
                         </div>
                     </div>
-                    <p class="text-gray-600 mb-4">"The memory core system lets me create specialized research assistants that understand my field's unique terminology and methods."</p>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">"The memory core system lets me create specialized research assistants that understand my field's unique terminology and methods."</p>
                     <div class="flex items-center">
                         <div class="flex -space-x-2">
-                            <img class="w-8 h-8 rounded-full border-2 border-white" src="https://randomuser.me/api/portraits/women/68.jpg" alt="">
-                            <img class="w-8 h-8 rounded-full border-2 border-white" src="https://randomuser.me/api/portraits/men/33.jpg" alt="">
-                            <img class="w-8 h-8 rounded-full border-2 border-white" src="https://randomuser.me/api/portraits/women/12.jpg" alt="">
+                            <img class="w-8 h-8 rounded-full border-2 border-white dark:border-dark-800" src="https://randomuser.me/api/portraits/women/68.jpg" alt="">
+                            <img class="w-8 h-8 rounded-full border-2 border-white dark:border-dark-800" src="https://randomuser.me/api/portraits/men/33.jpg" alt="">
+                            <img class="w-8 h-8 rounded-full border-2 border-white dark:border-dark-800" src="https://randomuser.me/api/portraits/women/12.jpg" alt="">
                         </div>
-                        <span class="text-gray-500 text-sm ml-2">+18 others</span>
+                        <span class="text-gray-500 dark:text-gray-400 text-sm ml-2">+18 others</span>
                     </div>
                 </div>
             </div>
@@ -459,193 +614,230 @@
     <!-- Blog Preview Section -->
     <section id="blog" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div class="text-center mb-16">
-            <h2 class="text-3xl font-bold text-dark mb-4">From Our Blog</h2>
-            <p class="text-gray-600 max-w-2xl mx-auto">Tutorials, case studies, and AI development insights</p>
+            <span class="inline-block px-3 py-1 text-xs font-semibold bg-primary-500/10 text-primary-500 dark:text-primary-400 rounded-full mb-4">INSIGHTS</span>
+            <h2 class="text-3xl font-bold text-dark-900 dark:text-light-100 mb-4 font-heading">From Our Blog</h2>
+            <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">Tutorials, case studies, and AI development insights</p>
         </div>
         
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <!-- Blog Post 1 -->
-            <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-                <div class="h-48 bg-gradient-to-r from-blue-400 to-indigo-500 flex items-center justify-center">
-                    <i class="fas fa-cogs text-white text-5xl"></i>
+            <div class="bg-white dark:bg-dark-800 rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 card-hover">
+                <div class="h-48 bg-gradient-to-r from-blue-400 to-indigo-500 flex items-center justify-center relative overflow-hidden">
+                    <i class="fas fa-cogs text-white text-5xl z-10"></i>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
                 </div>
                 <div class="p-6">
-                    <div class="flex items-center text-sm text-gray-500 mb-3">
+                    <div class="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-3">
                         <span>Tutorial</span>
                         <span class="mx-2">•</span>
                         <span>May 15, 2023</span>
                     </div>
-                    <h3 class="text-xl font-semibold text-dark mb-3">Customizing Your AI Clone's Personality Matrix</h3>
-                    <p class="text-gray-600 mb-4">Learn how to adjust the core personality parameters of your Orion clone to better match your needs.</p>
-                    <a href="#" class="text-primary font-medium hover:text-secondary transition-colors">Read More →</a>
+                    <h3 class="text-xl font-semibold text-dark-900 dark:text-light-100 mb-3">Customizing Your AI Clone's Personality Matrix</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-4">Learn how to adjust the core personality parameters of your Orion clone to better match your needs.</p>
+                    <a href="#" class="text-primary-500 dark:text-primary-400 font-medium hover:text-primary-600 dark:hover:text-primary-500 transition-colors inline-flex items-center">
+                        Read More <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
                 </div>
             </div>
             
             <!-- Blog Post 2 -->
-            <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-                <div class="h-48 bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center">
-                    <i class="fas fa-chart-line text-white text-5xl"></i>
+            <div class="bg-white dark:bg-dark-800 rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 card-hover">
+                <div class="h-48 bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center relative overflow-hidden">
+                    <i class="fas fa-chart-line text-white text-5xl z-10"></i>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
                 </div>
                 <div class="p-6">
-                    <div class="flex items-center text-sm text-gray-500 mb-3">
+                    <div class="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-3">
                         <span>Case Study</span>
                         <span class="mx-2">•</span>
                         <span>June 2, 2023</span>
                     </div>
-                    <h3 class="text-xl font-semibold text-dark mb-3">How a Solo Developer 10X'd Productivity with Orion Tools</h3>
-                    <p class="text-gray-600 mb-4">A detailed look at how one developer integrated multiple Orion modules into his workflow.</p>
-                    <a href="#" class="text-primary font-medium hover:text-secondary transition-colors">Read More →</a>
+                    <h3 class="text-xl font-semibold text-dark-900 dark:text-light-100 mb-3">How a Solo Developer 10X'd Productivity with Orion Tools</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-4">A detailed look at how one developer integrated multiple Orion modules into his workflow.</p>
+                    <a href="#" class="text-primary-500 dark:text-primary-400 font-medium hover:text-primary-600 dark:hover:text-primary-500 transition-colors inline-flex items-center">
+                        Read More <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
                 </div>
             </div>
             
             <!-- Blog Post 3 -->
-            <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-                <div class="h-48 bg-gradient-to-r from-green-500 to-teal-400 flex items-center justify-center">
-                    <i class="fas fa-shield-alt text-white text-5xl"></i>
+            <div class="bg-white dark:bg-dark-800 rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 card-hover">
+                <div class="h-48 bg-gradient-to-r from-green-500 to-teal-400 flex items-center justify-center relative overflow-hidden">
+                    <i class="fas fa-shield-alt text-white text-5xl z-10"></i>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
                 </div>
                 <div class="p-6">
-                    <div class="flex items-center text-sm text-gray-500 mb-3">
+                    <div class="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-3">
                         <span>Guide</span>
                         <span class="mx-2">•</span>
                         <span>June 18, 2023</span>
                     </div>
-                    <h3 class="text-xl font-semibold text-dark mb-3">Privacy Best Practices for Running Local AI Clones</h3>
-                    <p class="text-gray-600 mb-4">How to ensure your data remains secure when using Orion Forge products.</p>
-                    <a href="#" class="text-primary font-medium hover:text-secondary transition-colors">Read More →</a>
+                    <h3 class="text-xl font-semibold text-dark-900 dark:text-light-100 mb-3">Privacy Best Practices for Running Local AI Clones</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-4">How to ensure your data remains secure when using Orion Forge products.</p>
+                    <a href="#" class="text-primary-500 dark:text-primary-400 font-medium hover:text-primary-600 dark:hover:text-primary-500 transition-colors inline-flex items-center">
+                        Read More <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
                 </div>
             </div>
         </div>
         
         <div class="mt-12 text-center">
-            <button class="border-2 border-primary text-primary px-6 py-3 rounded-md text-lg font-semibold hover:bg-primary hover:text-white transition-colors">
-                View All Articles
+            <button class="border-2 border-primary-500 dark:border-primary-400 text-primary-500 dark:text-primary-400 px-6 py-3 rounded-md text-lg font-semibold hover:bg-primary-500 hover:text-white dark:hover:bg-primary-400 dark:hover:text-white transition-colors glow-effect">
+                <i class="fas fa-newspaper mr-2"></i> View All Articles
             </button>
         </div>
     </section>
 
     <!-- Newsletter Section -->
-    <section class="gradient-bg text-white py-16">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-3xl font-bold mb-4">Stay Updated</h2>
-            <p class="text-light mb-8 max-w-2xl mx-auto">Subscribe to our newsletter for product updates, tutorials, and AI insights delivered to your inbox.</p>
+    <section class="gradient-bg text-white py-16 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-20">
+            <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-float"></div>
+            <div class="absolute bottom-1/3 right-1/3 w-64 h-64 bg-blue-300 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-float animation-delay-2000"></div>
+        </div>
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <h2 class="text-3xl font-bold mb-4 font-heading">Stay Updated</h2>
+            <p class="text-light-200 mb-8 max-w-2xl mx-auto">Subscribe to our newsletter for product updates, tutorials, and AI insights delivered to your inbox.</p>
             
             <div class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
                 <input type="email" placeholder="Your email address" class="flex-grow px-4 py-3 rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-white">
-                <button class="bg-white text-primary px-6 py-3 rounded-md text-lg font-semibold hover:bg-gray-100 transition-colors">
+                <button class="bg-white text-primary-500 px-6 py-3 rounded-md text-lg font-semibold hover:bg-gray-100 transition-colors glow-effect">
                     Subscribe
                 </button>
             </div>
             
-            <p class="text-light text-sm mt-4">We respect your privacy. Unsubscribe at any time.</p>
+            <p class="text-light-200 text-sm mt-4">We respect your privacy. Unsubscribe at any time.</p>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-dark text-white">
+    <footer class="bg-dark-900 text-gray-400">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <!-- Column 1 -->
                 <div>
                     <div class="flex items-center mb-4">
-                        <i class="fas fa-robot text-secondary text-2xl mr-2"></i>
-                        <span class="text-xl font-bold">Orion Forge</span>
+                        <div class="w-8 h-8 rounded-full bg-primary-500/20 flex items-center justify-center mr-2 text-primary-400">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <span class="text-xl font-bold text-white font-heading">ORION FORGE</span>
                     </div>
-                    <p class="text-gray-400 mb-4">Modular AI tools and legacy-grade clones for creators, professionals, and enthusiasts.</p>
+                    <p class="text-gray-500 mb-4">Modular AI tools and legacy-grade clones for creators, professionals, and enthusiasts.</p>
                     <div class="flex space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <a href="#" class="text-gray-500 hover:text-white transition-colors">
                             <i class="fab fa-twitter"></i>
                         </a>
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <a href="#" class="text-gray-500 hover:text-white transition-colors">
                             <i class="fab fa-discord"></i>
                         </a>
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <a href="#" class="text-gray-500 hover:text-white transition-colors">
                             <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="text-gray-500 hover:text-white transition-colors">
+                            <i class="fab fa-youtube"></i>
                         </a>
                     </div>
                 </div>
                 
                 <!-- Column 2 -->
                 <div>
-                    <h3 class="text-lg font-semibold mb-4">Products</h3>
+                    <h3 class="text-lg font-semibold text-white mb-4 font-heading">Products</h3>
                     <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">AI Tools</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Clone Marketplace</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Bundles</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Orion UI</a></li>
+                        <li><a href="#" class="text-gray-500 hover:text-white transition-colors">AI Tools</a></li>
+                        <li><a href="#" class="text-gray-500 hover:text-white transition-colors">Clone Marketplace</a></li>
+                        <li><a href="#" class="text-gray-500 hover:text-white transition-colors">Bundles</a></li>
+                        <li><a href="#" class="text-gray-500 hover:text-white transition-colors">Orion UI</a></li>
+                        <li><a href="#" class="text-gray-500 hover:text-white transition-colors">Enterprise</a></li>
                     </ul>
                 </div>
                 
                 <!-- Column 3 -->
                 <div>
-                    <h3 class="text-lg font-semibold mb-4">Resources</h3>
+                    <h3 class="text-lg font-semibold text-white mb-4 font-heading">Resources</h3>
                     <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Documentation</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Blog</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Tutorials</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">API Reference</a></li>
+                        <li><a href="#" class="text-gray-500 hover:text-white transition-colors">Documentation</a></li>
+                        <li><a href="#" class="text-gray-500 hover:text-white transition-colors">Blog</a></li>
+                        <li><a href="#" class="text-gray-500 hover:text-white transition-colors">Tutorials</a></li>
+                        <li><a href="#" class="text-gray-500 hover:text-white transition-colors">API Reference</a></li>
+                        <li><a href="#" class="text-gray-500 hover:text-white transition-colors">Community</a></li>
                     </ul>
                 </div>
                 
                 <!-- Column 4 -->
                 <div>
-                    <h3 class="text-lg font-semibold mb-4">Company</h3>
+                    <h3 class="text-lg font-semibold text-white mb-4 font-heading">Company</h3>
                     <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">About</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Careers</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Contact</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Press</a></li>
+                        <li><a href="#" class="text-gray-500 hover:text-white transition-colors">About</a></li>
+                        <li><a href="#" class="text-gray-500 hover:text-white transition-colors">Careers</a></li>
+                        <li><a href="#" class="text-gray-500 hover:text-white transition-colors">Contact</a></li>
+                        <li><a href="#" class="text-gray-500 hover:text-white transition-colors">Press</a></li>
+                        <li><a href="#" class="text-gray-500 hover:text-white transition-colors">Legal</a></li>
                     </ul>
                 </div>
             </div>
             
             <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
-                <div class="text-gray-400 text-sm mb-4 md:mb-0">
+                <div class="text-gray-500 text-sm mb-4 md:mb-0">
                     © 2023 Orion Forge. All rights reserved.
                 </div>
                 <div class="flex space-x-6">
-                    <a href="#" class="text-gray-400 hover:text-white text-sm transition-colors">Privacy Policy</a>
-                    <a href="#" class="text-gray-400 hover:text-white text-sm transition-colors">Terms of Service</a>
-                    <a href="#" class="text-gray-400 hover:text-white text-sm transition-colors">License</a>
+                    <a href="#" class="text-gray-500 hover:text-white text-sm transition-colors">Privacy Policy</a>
+                    <a href="#" class="text-gray-500 hover:text-white text-sm transition-colors">Terms of Service</a>
+                    <a href="#" class="text-gray-500 hover:text-white text-sm transition-colors">License</a>
+                    <a href="#" class="text-gray-500 hover:text-white text-sm transition-colors">Cookies</a>
                 </div>
             </div>
         </div>
     </footer>
 
     <script>
-        // Simple JavaScript for demonstration purposes
-        document.addEventListener('DOMContentLoaded', function() {
-            // Smooth scrolling for anchor links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    
-                    const targetId = this.getAttribute('href');
-                    if (targetId === '#') return;
-                    
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        targetElement.scrollIntoView({
-                            behavior: 'smooth'
-                        });
-                    }
-                });
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+        
+        themeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+        });
+        
+        // Check for saved theme preference or use system preference
+        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            html.classList.add('dark');
+        } else {
+            html.classList.remove('dark');
+        }
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
             });
-            
-            // Add animation class when elements come into view
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('animate-fadeIn');
-                    }
-                });
-            }, {
-                threshold: 0.1
+        });
+        
+        // Add animation class when elements come into view
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-fadeIn');
+                    observer.unobserve(entry.target);
+                }
             });
-            
-            document.querySelectorAll('.feature-card, .testimonial, .blog-card').forEach(el => {
-                el.classList.add('opacity-0', 'transition-opacity', 'duration-500');
-                observer.observe(el);
-            });
+        }, {
+            threshold: 0.1
+        });
+        
+        document.querySelectorAll('.card-hover').forEach(el => {
+            el.classList.add('opacity-0', 'transition-opacity', 'duration-500');
+            observer.observe(el);
         });
     </script>
 </body>
