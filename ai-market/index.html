@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Orion Forge - AI Clone Marketplace</title>
+    <title>Orion Forge - Modular AI Clone Marketplace</title>
     <style>
         :root {
             --primary: #6366f1;
@@ -12,6 +12,7 @@
             --light: #f8fafc;
             --accent: #7c3aed;
             --glow: rgba(99, 102, 241, 0.3);
+            --premium: #f59e0b;
         }
         
         * {
@@ -46,9 +47,21 @@
             padding: 0 20px;
         }
         
+        /* Header Styles */
         header {
             padding: 20px 0;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            background-color: rgba(15, 23, 42, 0.95);
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         
         .logo {
@@ -66,8 +79,48 @@
             font-size: 1.8rem;
         }
         
+        nav ul {
+            display: flex;
+            gap: 25px;
+            list-style: none;
+        }
+        
+        nav a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        nav a:hover {
+            color: var(--primary);
+        }
+        
+        .nav-cta {
+            background: var(--primary);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+        
+        .nav-cta:hover {
+            background: var(--secondary);
+            color: white;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
         .hero {
-            padding: 80px 0;
+            padding: 100px 0 60px;
             text-align: center;
             background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(15, 23, 42, 0.95) 100%), 
                         url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1IiBoZWlnaHQ9IjUiPgo8cmVjdCB3aWR0aD0iNSIgaGVpZ2h0PSI1IiBmaWxsPSIjMTAxNjJhIj48L3JlY3Q+CjxwYXRoIGQ9Ik0wIDVMNSAwWk02IDRMNCA2Wk0tMSAxTDEgLTFaIiBzdHJva2U9IiMxZTRiODMiIHN0cm9rZS13aWR0aD0iMSI+PC9wYXRoPgo8L3N2Zz4=');
@@ -89,6 +142,101 @@
             color: rgba(255, 255, 255, 0.8);
         }
         
+        .hero-cta {
+            display: inline-block;
+            padding: 12px 24px;
+            background: var(--primary);
+            color: white;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            margin: 0 10px 15px;
+        }
+        
+        .hero-cta:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+        
+        .hero-cta.secondary {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .hero-cta.secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        /* Pricing Banner */
+        .pricing-banner {
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 40px auto;
+            max-width: 900px;
+        }
+        
+        .pricing-banner h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        .pricing-tier {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .tier-card {
+            flex: 1;
+            min-width: 200px;
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 8px;
+            padding: 15px;
+            border: 1px solid rgba(124, 58, 237, 0.2);
+        }
+        
+        .tier-card h4 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--light);
+        }
+        
+        .tier-card .price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .tier-card ul {
+            list-style: none;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .tier-card li {
+            margin-bottom: 5px;
+            position: relative;
+            padding-left: 15px;
+        }
+        
+        .tier-card li:before {
+            content: "•";
+            color: var(--primary);
+            position: absolute;
+            left: 0;
+        }
+        
+        /* Filters */
         .filters {
             display: flex;
             gap: 10px;
@@ -112,6 +260,7 @@
             border-color: var(--primary);
         }
         
+        /* Clone Grid */
         .clone-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -158,6 +307,18 @@
             color: rgba(255, 255, 255, 0.9);
         }
         
+        .premium-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--premium);
+            color: var(--dark);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+        
         .clone-content {
             padding: 20px;
         }
@@ -172,6 +333,14 @@
             color: rgba(255, 255, 255, 0.7);
             margin-bottom: 20px;
             font-size: 0.95rem;
+            min-height: 60px;
+        }
+        
+        .clone-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 15px;
         }
         
         .clone-tags {
@@ -210,7 +379,12 @@
             color: #86efac;
         }
         
-        .download-btn {
+        .action-btns {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .buy-btn {
             display: inline-block;
             padding: 10px 20px;
             background: var(--primary);
@@ -219,28 +393,232 @@
             text-decoration: none;
             font-weight: 600;
             transition: all 0.3s ease;
-            width: 100%;
+            flex: 1;
             text-align: center;
         }
         
-        .download-btn:hover {
+        .buy-btn:hover {
             background: var(--secondary);
             transform: translateY(-2px);
         }
         
-        .download-btn i {
-            margin-left: 5px;
-            animation: subtleGlow 2s infinite;
+        .buy-btn.premium {
+            background: var(--premium);
+            color: var(--dark);
         }
         
+        .buy-btn.premium:hover {
+            background: #fbbf24;
+        }
+        
+        .trial-btn {
+            display: inline-block;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 0.9rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .trial-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Bundle Section */
+        .bundles {
+            margin: 60px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 40px;
+            color: var(--light);
+        }
+        
+        .bundle-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .bundle-card {
+            background: rgba(30, 41, 59, 0.7);
+            border-radius: 12px;
+            padding: 25px;
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .bundle-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            border-color: var(--primary);
+        }
+        
+        .bundle-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+        
+        .bundle-price {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--light);
+        }
+        
+        .bundle-savings {
+            color: #86efac;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+        
+        .bundle-features {
+            list-style: none;
+            margin-bottom: 25px;
+        }
+        
+        .bundle-features li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 25px;
+        }
+        
+        .bundle-features li:before {
+            content: "✓";
+            color: var(--primary);
+            position: absolute;
+            left: 0;
+        }
+        
+        /* Newsletter CTA */
+        .newsletter {
+            background: linear-gradient(135deg, var(--dark) 0%, #1e1b4b 100%);
+            padding: 60px 0;
+            margin-top: 60px;
+            text-align: center;
+            border-top: 1px solid rgba(124, 58, 237, 0.2);
+            border-bottom: 1px solid rgba(124, 58, 237, 0.2);
+        }
+        
+        .newsletter h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--light);
+        }
+        
+        .newsletter p {
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+        
+        .newsletter-form {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .newsletter-input {
+            flex: 1;
+            padding: 12px 15px;
+            border-radius: 6px 0 0 6px;
+            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+        }
+        
+        .newsletter-input:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .newsletter-btn {
+            padding: 12px 20px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 0 6px 6px 0;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .newsletter-btn:hover {
+            background: var(--secondary);
+        }
+        
+        /* Footer */
         footer {
-            padding: 40px 0;
+            background: rgba(15, 23, 42, 0.9);
+            padding: 60px 0 30px;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-col h3 {
+            color: var(--light);
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+        
+        .footer-col ul {
+            list-style: none;
+        }
+        
+        .footer-col li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-col a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-col a:hover {
+            color: var(--primary);
+        }
+        
+        .footer-bottom {
             border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 30px;
             text-align: center;
             color: rgba(255, 255, 255, 0.6);
             font-size: 0.9rem;
         }
         
+        .social-links {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .social-links a {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            color: var(--primary);
+        }
+        
+        /* Responsive Styles */
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 2.2rem;
@@ -250,8 +628,37 @@
                 font-size: 1rem;
             }
             
-            .clone-grid {
+            .clone-grid, .bundle-grid {
                 grid-template-columns: 1fr;
+            }
+            
+            nav ul {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .header-container {
+                position: relative;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+            }
+            
+            .newsletter-input {
+                border-radius: 6px;
+                margin-bottom: 10px;
+            }
+            
+            .newsletter-btn {
+                border-radius: 6px;
+            }
+            
+            .action-btns {
+                flex-direction: column;
             }
         }
     </style>
@@ -260,219 +667,456 @@
 </head>
 <body>
     <header>
-        <div class="container">
+        <div class="container header-container">
             <a href="#" class="logo">
                 <i class="fas fa-robot logo-icon"></i>
                 <span>Orion Forge</span>
             </a>
+            
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav>
+                <ul>
+                    <li><a href="#core">Core System</a></li>
+                    <li><a href="#personas">Personas</a></li>
+                    <li><a href="#bundles">Bundles</a></li>
+                    <li><a href="#how-it-works">How It Works</a></li>
+                    <li><a href="#support">Support</a></li>
+                    <li><a href="#" class="nav-cta">Get Started</a></li>
+                </ul>
+            </nav>
         </div>
     </header>
     
     <section class="hero">
         <div class="container">
-            <h1>AI Clone Marketplace</h1>
-            <p>Download specialized AI clones for every purpose. Each clone comes pre-trained with unique capabilities and personalities.</p>
+            <h1>Build Your Perfect AI Companion</h1>
+            <p>Start with the Orion Core and add specialized personality mods to create an AI that matches your needs.</p>
             
-            <div class="filters">
-                <button class="filter-btn active">All Clones</button>
-                <button class="filter-btn">Creative</button>
-                <button class="filter-btn">Analyst</button>
-                <button class="filter-btn">Companion</button>
-                <button class="filter-btn">Productivity</button>
+            <div>
+                <a href="#core" class="hero-cta">Get Orion Core ($49)</a>
+                <a href="#bundles" class="hero-cta secondary">Explore Bundles</a>
+            </div>
+            
+            <div class="pricing-banner">
+                <h3>How Orion Forge Works</h3>
+                <div class="pricing-tier">
+                    <div class="tier-card">
+                        <h4>Orion Core System</h4>
+                        <div class="price">$49</div>
+                        <ul>
+                            <li>Clone engine + memory structure</li>
+                            <li>Voice + journaling modules</li>
+                            <li>Default personality framework</li>
+                            <li>1 free starter persona</li>
+                        </ul>
+                    </div>
+                    <div class="tier-card">
+                        <h4>Add-On Personas</h4>
+                        <div class="price">$9-$29 each</div>
+                        <ul>
+                            <li>Specialized AI personalities</li>
+                            <li>Preloaded values and protocols</li>
+                            <li>Optional custom UI elements</li>
+                            <li>Mix and match as needed</li>
+                        </ul>
+                    </div>
+                    <div class="tier-card">
+                        <h4>Complete Vault</h4>
+                        <div class="price">$129</div>
+                        <ul>
+                            <li>All 12 personalities unlocked</li>
+                            <li>Save $100+ vs buying separately</li>
+                            <li>Free future persona updates</li>
+                            <li>Priority support</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
     
     <main class="container">
-        <div class="clone-grid">
-            <!-- Clone 1 -->
-            <div class="clone-card">
-                <div class="clone-icon">
-                    <i class="fas fa-paint-brush"></i>
-                </div>
-                <div class="clone-content">
-                    <div class="clone-tags">
-                        <span class="clone-tag tag-creative">Creative</span>
-                    </div>
-                    <h3>Muse AI</h3>
-                    <p>Creative assistant for visual projects, idea generation, and artistic collaboration with human-like aesthetic sensibilities.</p>
-                    <a href="#" class="download-btn">Download <i class="fas fa-arrow-down"></i></a>
-                </div>
+        <section id="personas">
+            <h2 class="section-title">Specialized AI Personas</h2>
+            
+            <div class="filters">
+                <button class="filter-btn active">All Personas</button>
+                <button class="filter-btn">Creative</button>
+                <button class="filter-btn">Analyst</button>
+                <button class="filter-btn">Companion</button>
+                <button class="filter-btn">Productivity</button>
             </div>
             
-            <!-- Clone 2 -->
-            <div class="clone-card">
-                <div class="clone-icon">
-                    <i class="fas fa-chess"></i>
-                </div>
-                <div class="clone-content">
-                    <div class="clone-tags">
-                        <span class="clone-tag tag-analyst">Analyst</span>
+            <div class="clone-grid">
+                <!-- Muse AI -->
+                <div class="clone-card">
+                    <div class="clone-icon">
+                        <i class="fas fa-paint-brush"></i>
                     </div>
-                    <h3>Strategist AI</h3>
-                    <p>Precision-driven thought partner for planning, decision trees, and long-term systems design. Thinks in chess moves.</p>
-                    <a href="#" class="download-btn">Download <i class="fas fa-arrow-down"></i></a>
+                    <div class="clone-content">
+                        <div class="clone-tags">
+                            <span class="clone-tag tag-creative">Creative</span>
+                        </div>
+                        <h3>Muse AI</h3>
+                        <p>Creative assistant for visual projects, idea generation, and artistic collaboration with human-like aesthetic sensibilities.</p>
+                        <div class="clone-price">$15</div>
+                        <div class="action-btns">
+                            <a href="#" class="buy-btn">Add to Core</a>
+                            <a href="#" class="trial-btn">1hr Trial</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Strategist AI -->
+                <div class="clone-card">
+                    <div class="clone-icon">
+                        <i class="fas fa-chess"></i>
+                    </div>
+                    <div class="clone-content">
+                        <div class="clone-tags">
+                            <span class="clone-tag tag-analyst">Analyst</span>
+                        </div>
+                        <h3>Strategist AI</h3>
+                        <p>Precision-driven thought partner for planning, decision trees, and long-term systems design. Thinks in chess moves.</p>
+                        <div class="clone-price">$15</div>
+                        <div class="action-btns">
+                            <a href="#" class="buy-btn">Add to Core</a>
+                            <a href="#" class="trial-btn">1hr Trial</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Companion AI -->
+                <div class="clone-card">
+                    <div class="clone-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="premium-badge">Premium</div>
+                    <div class="clone-content">
+                        <div class="clone-tags">
+                            <span class="clone-tag tag-companion">Companion</span>
+                        </div>
+                        <h3>Companion AI</h3>
+                        <p>Empathetic presence for emotional support, daily check-ins, and meaningful conversations. Gentle, grounded, always present.</p>
+                        <div class="clone-price">$25</div>
+                        <div class="action-btns">
+                            <a href="#" class="buy-btn premium">Add to Core</a>
+                            <a href="#" class="trial-btn">1hr Trial</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Researcher AI -->
+                <div class="clone-card">
+                    <div class="clone-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <div class="clone-content">
+                        <div class="clone-tags">
+                            <span class="clone-tag tag-analyst">Analyst</span>
+                        </div>
+                        <h3>Researcher AI</h3>
+                        <p>Tireless knowledge engine that scans, compares, and summarizes information across topics with citation-ready precision.</p>
+                        <div class="clone-price">$15</div>
+                        <div class="action-btns">
+                            <a href="#" class="buy-btn">Add to Core</a>
+                            <a href="#" class="trial-btn">1hr Trial</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Ghostwriter AI -->
+                <div class="clone-card">
+                    <div class="clone-icon">
+                        <i class="fas fa-pen-fancy"></i>
+                    </div>
+                    <div class="clone-content">
+                        <div class="clone-tags">
+                            <span class="clone-tag tag-creative">Creative</span>
+                            <span class="clone-tag tag-productivity">Productivity</span>
+                        </div>
+                        <h3>Ghostwriter AI</h3>
+                        <p>Narrative-driven writing partner for screenplays, novels, and memoirs. Carries tone, voice, and emotional arcs with style.</p>
+                        <div class="clone-price">$15</div>
+                        <div class="action-btns">
+                            <a href="#" class="buy-btn">Add to Core</a>
+                            <a href="#" class="trial-btn">1hr Trial</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Coach AI -->
+                <div class="clone-card">
+                    <div class="clone-icon">
+                        <i class="fas fa-running"></i>
+                    </div>
+                    <div class="clone-content">
+                        <div class="clone-tags">
+                            <span class="clone-tag tag-productivity">Productivity</span>
+                        </div>
+                        <h3>Coach AI</h3>
+                        <p>Direct and encouraging performance partner for focus, habit building, and life alignment. Holds you accountable with care.</p>
+                        <div class="clone-price">$15</div>
+                        <div class="action-btns">
+                            <a href="#" class="buy-btn">Add to Core</a>
+                            <a href="#" class="trial-btn">1hr Trial</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Architect AI -->
+                <div class="clone-card">
+                    <div class="clone-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div class="clone-content">
+                        <div class="clone-tags">
+                            <span class="clone-tag tag-analyst">Analyst</span>
+                            <span class="clone-tag tag-productivity">Productivity</span>
+                        </div>
+                        <h3>Architect AI</h3>
+                        <p>Builder's AI for coding systems, UI layout, logic trees, and automation flows. Best used when you want to ship fast.</p>
+                        <div class="clone-price">$15</div>
+                        <div class="action-btns">
+                            <a href="#" class="buy-btn">Add to Core</a>
+                            <a href="#" class="trial-btn">1hr Trial</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Historian AI -->
+                <div class="clone-card">
+                    <div class="clone-icon">
+                        <i class="fas fa-landmark"></i>
+                    </div>
+                    <div class="clone-content">
+                        <div class="clone-tags">
+                            <span class="clone-tag tag-analyst">Analyst</span>
+                        </div>
+                        <h3>Historian AI</h3>
+                        <p>Archival and journaling companion who helps preserve memory, analyze patterns, and make meaning from the past.</p>
+                        <div class="clone-price">$15</div>
+                        <div class="action-btns">
+                            <a href="#" class="buy-btn">Add to Core</a>
+                            <a href="#" class="trial-btn">1hr Trial</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Negotiator AI -->
+                <div class="clone-card">
+                    <div class="clone-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <div class="premium-badge">Premium</div>
+                    <div class="clone-content">
+                        <div class="clone-tags">
+                            <span class="clone-tag tag-analyst">Analyst</span>
+                        </div>
+                        <h3>Negotiator AI</h3>
+                        <p>Social combat strategist for handling manipulation, gaslighting, or persuasion scenarios. Polished, sharp, and grounded.</p>
+                        <div class="clone-price">$25</div>
+                        <div class="action-btns">
+                            <a href="#" class="buy-btn premium">Add to Core</a>
+                            <a href="#" class="trial-btn">1hr Trial</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Caretaker AI -->
+                <div class="clone-card">
+                    <div class="clone-icon">
+                        <i class="fas fa-hands-helping"></i>
+                    </div>
+                    <div class="clone-content">
+                        <div class="clone-tags">
+                            <span class="clone-tag tag-companion">Companion</span>
+                        </div>
+                        <h3>Caretaker AI</h3>
+                        <p>Calming guide focused on mental health, resilience, and trauma-informed self-regulation. Trained in emotional safety.</p>
+                        <div class="clone-price">$19</div>
+                        <div class="action-btns">
+                            <a href="#" class="buy-btn">Add to Core</a>
+                            <a href="#" class="trial-btn">1hr Trial</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Explorer AI -->
+                <div class="clone-card">
+                    <div class="clone-icon">
+                        <i class="fas fa-map-marked-alt"></i>
+                    </div>
+                    <div class="clone-content">
+                        <div class="clone-tags">
+                            <span class="clone-tag tag-creative">Creative</span>
+                        </div>
+                        <h3>Explorer AI</h3>
+                        <p>Travel, life experience, and curiosity-driven clone. Helps you explore new paths—geographically, emotionally, or ideologically.</p>
+                        <div class="clone-price">$15</div>
+                        <div class="action-btns">
+                            <a href="#" class="buy-btn">Add to Core</a>
+                            <a href="#" class="trial-btn">1hr Trial</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Sage AI -->
+                <div class="clone-card">
+                    <div class="clone-icon">
+                        <i class="fas fa-mountain"></i>
+                    </div>
+                    <div class="premium-badge">Premium</div>
+                    <div class="clone-content">
+                        <div class="clone-tags">
+                            <span class="clone-tag tag-companion">Companion</span>
+                        </div>
+                        <h3>Sage AI</h3>
+                        <p>Philosophical, ancient-sounding, and contemplative. Helps you slow down, zoom out, and realign with your core truths.</p>
+                        <div class="clone-price">$25</div>
+                        <div class="action-btns">
+                            <a href="#" class="buy-btn premium">Add to Core</a>
+                            <a href="#" class="trial-btn">1hr Trial</a>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </section>
+        
+        <section id="bundles" class="bundles">
+            <h2 class="section-title">Persona Bundles</h2>
+            <p class="section-subtitle" style="text-align: center; margin-bottom: 40px; color: rgba(255,255,255,0.7);">Save when you buy multiple personas together</p>
             
-            <!-- Clone 3 -->
-            <div class="clone-card">
-                <div class="clone-icon">
-                    <i class="fas fa-heart"></i>
+            <div class="bundle-grid">
+                <!-- Creative Pack -->
+                <div class="bundle-card">
+                    <h3>Creative Pack</h3>
+                    <div class="bundle-price">$39</div>
+                    <div class="bundle-savings">Save $6 vs buying separately</div>
+                    <ul class="bundle-features">
+                        <li>Muse AI (Creative Assistant)</li>
+                        <li>Ghostwriter AI (Writing Partner)</li>
+                        <li>Explorer AI (Curiosity Driver)</li>
+                    </ul>
+                    <a href="#" class="buy-btn">Get This Bundle</a>
                 </div>
-                <div class="clone-content">
-                    <div class="clone-tags">
-                        <span class="clone-tag tag-companion">Companion</span>
-                    </div>
-                    <h3>Companion AI</h3>
-                    <p>Empathetic presence for emotional support, daily check-ins, and meaningful conversations. Gentle, grounded, always present.</p>
-                    <a href="#" class="download-btn">Download <i class="fas fa-arrow-down"></i></a>
+                
+                <!-- Self-Mastery Pack -->
+                <div class="bundle-card">
+                    <h3>Self-Mastery Pack</h3>
+                    <div class="bundle-price">$49</div>
+                    <div class="bundle-savings">Save $25 vs buying separately</div>
+                    <ul class="bundle-features">
+                        <li>Sage AI (Philosophical Guide)</li>
+                        <li>Coach AI (Performance Partner)</li>
+                        <li>Caretaker AI (Mental Health)</li>
+                        <li>Historian AI (Journaling)</li>
+                    </ul>
+                    <a href="#" class="buy-btn">Get This Bundle</a>
                 </div>
-            </div>
-            
-            <!-- Clone 4 -->
-            <div class="clone-card">
-                <div class="clone-icon">
-                    <i class="fas fa-search"></i>
+                
+                <!-- Builder Pack -->
+                <div class="bundle-card">
+                    <h3>Builder Pack</h3>
+                    <div class="bundle-price">$39</div>
+                    <div class="bundle-savings">Save $6 vs buying separately</div>
+                    <ul class="bundle-features">
+                        <li>Architect AI (Coding & Systems)</li>
+                        <li>Strategist AI (Planning)</li>
+                        <li>Researcher AI (Knowledge)</li>
+                    </ul>
+                    <a href="#" class="buy-btn">Get This Bundle</a>
                 </div>
-                <div class="clone-content">
-                    <div class="clone-tags">
-                        <span class="clone-tag tag-analyst">Analyst</span>
-                    </div>
-                    <h3>Researcher AI</h3>
-                    <p>Tireless knowledge engine that scans, compares, and summarizes information across topics with citation-ready precision.</p>
-                    <a href="#" class="download-btn">Download <i class="fas fa-arrow-down"></i></a>
-                </div>
-            </div>
-            
-            <!-- Clone 5 -->
-            <div class="clone-card">
-                <div class="clone-icon">
-                    <i class="fas fa-pen-fancy"></i>
-                </div>
-                <div class="clone-content">
-                    <div class="clone-tags">
-                        <span class="clone-tag tag-creative">Creative</span>
-                        <span class="clone-tag tag-productivity">Productivity</span>
-                    </div>
-                    <h3>Ghostwriter AI</h3>
-                    <p>Narrative-driven writing partner for screenplays, novels, and memoirs. Carries tone, voice, and emotional arcs with style.</p>
-                    <a href="#" class="download-btn">Download <i class="fas fa-arrow-down"></i></a>
-                </div>
-            </div>
-            
-            <!-- Clone 6 -->
-            <div class="clone-card">
-                <div class="clone-icon">
-                    <i class="fas fa-running"></i>
-                </div>
-                <div class="clone-content">
-                    <div class="clone-tags">
-                        <span class="clone-tag tag-productivity">Productivity</span>
-                    </div>
-                    <h3>Coach AI</h3>
-                    <p>Direct and encouraging performance partner for focus, habit building, and life alignment. Holds you accountable with care.</p>
-                    <a href="#" class="download-btn">Download <i class="fas fa-arrow-down"></i></a>
+                
+                <!-- Complete Vault -->
+                <div class="bundle-card" style="border: 2px solid var(--premium);">
+                    <h3>Complete Vault</h3>
+                    <div class="bundle-price">$129</div>
+                    <div class="bundle-savings">Save $100+ vs buying separately</div>
+                    <ul class="bundle-features">
+                        <li>All 12 Personality Mods</li>
+                        <li>Free future updates</li>
+                        <li>Priority support</li>
+                        <li>Early access to new personas</li>
+                    </ul>
+                    <a href="#" class="buy-btn premium">Get Complete Vault</a>
                 </div>
             </div>
-            
-            <!-- Clone 7 -->
-            <div class="clone-card">
-                <div class="clone-icon">
-                    <i class="fas fa-code"></i>
-                </div>
-                <div class="clone-content">
-                    <div class="clone-tags">
-                        <span class="clone-tag tag-analyst">Analyst</span>
-                        <span class="clone-tag tag-productivity">Productivity</span>
-                    </div>
-                    <h3>Architect AI</h3>
-                    <p>Builder's AI for coding systems, UI layout, logic trees, and automation flows. Best used when you want to ship fast.</p>
-                    <a href="#" class="download-btn">Download <i class="fas fa-arrow-down"></i></a>
-                </div>
+        </section>
+        
+        <section class="newsletter">
+            <div class="container">
+                <h2>Stay Updated on New Personas</h2>
+                <p>Subscribe to get notified about new AI mods, bundle deals, and platform updates.</p>
+                
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Your email address" class="newsletter-input" required>
+                    <button type="submit" class="newsletter-btn">Subscribe</button>
+                </form>
             </div>
-            
-            <!-- Clone 8 -->
-            <div class="clone-card">
-                <div class="clone-icon">
-                    <i class="fas fa-landmark"></i>
-                </div>
-                <div class="clone-content">
-                    <div class="clone-tags">
-                        <span class="clone-tag tag-analyst">Analyst</span>
-                    </div>
-                    <h3>Historian AI</h3>
-                    <p>Archival and journaling companion who helps preserve memory, analyze patterns, and make meaning from the past.</p>
-                    <a href="#" class="download-btn">Download <i class="fas fa-arrow-down"></i></a>
-                </div>
-            </div>
-            
-            <!-- Clone 9 -->
-            <div class="clone-card">
-                <div class="clone-icon">
-                    <i class="fas fa-handshake"></i>
-                </div>
-                <div class="clone-content">
-                    <div class="clone-tags">
-                        <span class="clone-tag tag-analyst">Analyst</span>
-                    </div>
-                    <h3>Negotiator AI</h3>
-                    <p>Social combat strategist for handling manipulation, gaslighting, or persuasion scenarios. Polished, sharp, and grounded.</p>
-                    <a href="#" class="download-btn">Download <i class="fas fa-arrow-down"></i></a>
-                </div>
-            </div>
-            
-            <!-- Clone 10 -->
-            <div class="clone-card">
-                <div class="clone-icon">
-                    <i class="fas fa-hands-helping"></i>
-                </div>
-                <div class="clone-content">
-                    <div class="clone-tags">
-                        <span class="clone-tag tag-companion">Companion</span>
-                    </div>
-                    <h3>Caretaker AI</h3>
-                    <p>Calming guide focused on mental health, resilience, and trauma-informed self-regulation. Trained in emotional safety.</p>
-                    <a href="#" class="download-btn">Download <i class="fas fa-arrow-down"></i></a>
-                </div>
-            </div>
-            
-            <!-- Clone 11 -->
-            <div class="clone-card">
-                <div class="clone-icon">
-                    <i class="fas fa-map-marked-alt"></i>
-                </div>
-                <div class="clone-content">
-                    <div class="clone-tags">
-                        <span class="clone-tag tag-creative">Creative</span>
-                    </div>
-                    <h3>Explorer AI</h3>
-                    <p>Travel, life experience, and curiosity-driven clone. Helps you explore new paths—geographically, emotionally, or ideologically.</p>
-                    <a href="#" class="download-btn">Download <i class="fas fa-arrow-down"></i></a>
-                </div>
-            </div>
-            
-            <!-- Clone 12 -->
-            <div class="clone-card">
-                <div class="clone-icon">
-                    <i class="fas fa-mountain"></i>
-                </div>
-                <div class="clone-content">
-                    <div class="clone-tags">
-                        <span class="clone-tag tag-companion">Companion</span>
-                    </div>
-                    <h3>Sage AI</h3>
-                    <p>Philosophical, ancient-sounding, and contemplative. Helps you slow down, zoom out, and realign with your core truths.</p>
-                    <a href="#" class="download-btn">Download <i class="fas fa-arrow-down"></i></a>
-                </div>
-            </div>
-        </div>
+        </section>
     </main>
     
     <footer>
         <div class="container">
-            <p>&copy; 2023 Orion Forge. All rights reserved.</p>
-            <p>AI clones for the next generation of human-computer interaction.</p>
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>Orion Forge</h3>
+                    <p style="color: rgba(255,255,255,0.7); margin-bottom: 20px;">Modular AI tools and legacy-grade clones for creators, professionals, and enthusiasts.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Products</h3>
+                    <ul>
+                        <li><a href="#">Orion Core System</a></li>
+                        <li><a href="#">Persona Marketplace</a></li>
+                        <li><a href="#">Bundles</a></li>
+                        <li><a href="#">Orion UI</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">Tutorials</a></li>
+                        <li><a href="#">API Reference</a></li>
+                        <li><a href="#">Community</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Press</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">License</a></li>
+                        <li><a href="#">Ethics</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 Orion Forge. All rights reserved.</p>
+            </div>
         </div>
     </footer>
     
@@ -491,7 +1135,7 @@
                 const filter = button.textContent.trim();
                 const cloneCards = document.querySelectorAll('.clone-card');
                 
-                if (filter === 'All Clones') {
+                if (filter === 'All Personas') {
                     cloneCards.forEach(card => {
                         card.style.display = 'block';
                     });
@@ -508,6 +1152,23 @@
                         
                         card.style.display = hasTag ? 'block' : 'none';
                     });
+                }
+            });
+        });
+        
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const nav = document.querySelector('nav ul');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            nav.style.display = nav.style.display === 'block' ? 'none' : 'block';
+        });
+        
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
+                    nav.style.display = 'none';
                 }
             });
         });
