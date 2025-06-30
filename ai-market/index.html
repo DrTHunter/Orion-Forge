@@ -47,6 +47,17 @@
             padding: 0 20px;
         }
         
+        /* Full width sections */
+        .full-width {
+            width: 100%;
+            padding-left: 0;
+            padding-right: 0;
+        }
+        
+        .full-width .container {
+            padding: 0 20px;
+        }
+        
         /* Header Styles */
         header {
             padding: 20px 0;
@@ -498,26 +509,30 @@
             left: 0;
         }
         
-        /* Newsletter CTA */
-        .newsletter {
+        /* Newsletter CTA - Full Width */
+        .newsletter-cta {
             background: linear-gradient(135deg, var(--dark) 0%, #1e1b4b 100%);
-            padding: 60px 0;
+            padding: 80px 0;
             margin-top: 60px;
-            text-align: center;
             border-top: 1px solid rgba(124, 58, 237, 0.2);
             border-bottom: 1px solid rgba(124, 58, 237, 0.2);
         }
         
-        .newsletter h2 {
-            font-size: 2rem;
+        .newsletter-cta .container {
+            max-width: 800px;
+            text-align: center;
+        }
+        
+        .newsletter-cta h2 {
+            font-size: 2.5rem;
             margin-bottom: 20px;
             color: var(--light);
         }
         
-        .newsletter p {
+        .newsletter-cta p {
             color: rgba(255, 255, 255, 0.8);
-            max-width: 600px;
-            margin: 0 auto 30px;
+            font-size: 1.1rem;
+            margin-bottom: 40px;
         }
         
         .newsletter-form {
@@ -528,7 +543,7 @@
         
         .newsletter-input {
             flex: 1;
-            padding: 12px 15px;
+            padding: 15px 20px;
             border-radius: 6px 0 0 6px;
             border: none;
             background: rgba(255, 255, 255, 0.1);
@@ -542,12 +557,13 @@
         }
         
         .newsletter-btn {
-            padding: 12px 20px;
+            padding: 15px 25px;
             background: var(--primary);
             color: white;
             border: none;
             border-radius: 0 6px 6px 0;
             font-weight: 600;
+            font-size: 1rem;
             cursor: pointer;
             transition: background 0.3s ease;
         }
@@ -556,10 +572,11 @@
             background: var(--secondary);
         }
         
-        /* Footer */
-        footer {
-            background: rgba(15, 23, 42, 0.9);
-            padding: 60px 0 30px;
+        /* Footer - Full Width */
+        .site-footer {
+            background: rgba(15, 23, 42, 0.95);
+            padding: 80px 0 40px;
+            border-top: 1px solid rgba(124, 58, 237, 0.2);
         }
         
         .footer-grid {
@@ -659,6 +676,14 @@
             
             .action-btns {
                 flex-direction: column;
+            }
+            
+            .newsletter-cta h2 {
+                font-size: 2rem;
+            }
+            
+            .newsletter-cta p {
+                font-size: 1rem;
             }
         }
     </style>
@@ -1047,20 +1072,21 @@
             </div>
         </section>
         
-        <section class="newsletter">
-            <div class="container">
-                <h2>Stay Updated on New Personas</h2>
-                <p>Subscribe to get notified about new AI mods, bundle deals, and platform updates.</p>
-                
-                <form class="newsletter-form">
-                    <input type="email" placeholder="Your email address" class="newsletter-input" required>
-                    <button type="submit" class="newsletter-btn">Subscribe</button>
-                </form>
-            </div>
-        </section>
-    </main>
+    <!-- Full Width Email CTA Section -->
+    <section class="newsletter-cta full-width">
+        <div class="container">
+            <h2>Join the Orion Forge Community</h2>
+            <p>Subscribe to get updates on new AI personas, exclusive deals, and platform enhancements.</p>
+            
+            <form class="newsletter-form">
+                <input type="email" placeholder="Your email address" class="newsletter-input" required>
+                <button type="submit" class="newsletter-btn">Subscribe Now</button>
+            </form>
+        </div>
+    </section>
     
-    <footer>
+    <!-- Full Width Footer -->
+    <footer class="site-footer full-width">
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-col">
@@ -1121,15 +1147,12 @@
     </footer>
     
     <script>
-        // Simple filter functionality
+        // Same JavaScript as before
         document.querySelectorAll('.filter-btn').forEach(button => {
             button.addEventListener('click', () => {
-                // Remove active class from all buttons
                 document.querySelectorAll('.filter-btn').forEach(btn => {
                     btn.classList.remove('active');
                 });
-                
-                // Add active class to clicked button
                 button.classList.add('active');
                 
                 const filter = button.textContent.trim();
@@ -1156,7 +1179,6 @@
             });
         });
         
-        // Mobile menu toggle
         const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
         const nav = document.querySelector('nav ul');
         
@@ -1164,7 +1186,6 @@
             nav.style.display = nav.style.display === 'block' ? 'none' : 'block';
         });
         
-        // Close mobile menu when clicking on a link
         document.querySelectorAll('nav a').forEach(link => {
             link.addEventListener('click', () => {
                 if (window.innerWidth <= 768) {
