@@ -77,22 +77,54 @@
             color: #a78bfa;
         }
         
-        /* Animation for expanding cards */
-        .mod-card {
-            transition: all 0.3s ease;
-            overflow: hidden;
-        }
-        .mod-details {
-            max-height: 0;
+        /* Popup styles */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             opacity: 0;
-            transition: max-height 0.5s ease, opacity 0.3s ease;
+            visibility: hidden;
+            transition: all 0.3s ease;
         }
-        .mod-card.expanded {
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-        }
-        .mod-card.expanded .mod-details {
-            max-height: 1000px;
+        .popup-overlay.active {
             opacity: 1;
+            visibility: visible;
+        }
+        .popup-content {
+            background: white;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .popup-overlay.active .popup-content {
+            transform: translateY(0);
+        }
+        .close-popup {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #6366f1;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
         }
     </style>
 </head>
@@ -161,9 +193,33 @@
     <!-- Mod Grid Section -->
     <section id="mods" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Featured Card - Orion Voice Companion -->
+            <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 border-2 border-primary">
+                <div class="cursor-pointer mod-summary" data-popup="orion-voice">
+                    <div class="h-48 bg-gradient-to-r from-blue-600 to-indigo-700 flex items-center justify-center">
+                        <i class="fas fa-microphone-alt text-white text-5xl"></i>
+                    </div>
+                    <div class="absolute top-4 left-4 bg-white text-primary px-2 py-1 rounded-md text-xs font-bold">FEATURED</div>
+                    <div class="p-6">
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="text-xs px-2 py-1 rounded-full tag-voice-video">🎙️ Voice & Video</span>
+                            <span class="text-xs px-2 py-1 rounded-full tag-identity-persona">🧬 Identity & Persona</span>
+                        </div>
+                        <h3 class="text-xl font-semibold text-dark mb-2">Orion Voice Companion</h3>
+                        <p class="text-gray-600 mb-6">Give your AI a voice—and a soul. Seamless spoken conversation with your AI.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-primary font-medium">$29</span>
+                            <button class="text-sm bg-primary text-white px-4 py-2 rounded-md hover:bg-secondary transition-colors">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
             <!-- Task Whisperer -->
-            <div class="mod-card bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300">
-                <div class="cursor-pointer mod-summary">
+            <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300">
+                <div class="cursor-pointer mod-summary" data-popup="task-whisperer">
                     <div class="h-48 bg-gradient-to-r from-blue-500 to-indigo-600 flex items-center justify-center">
                         <i class="fas fa-tasks text-white text-5xl"></i>
                     </div>
@@ -181,37 +237,11 @@
                         </div>
                     </div>
                 </div>
-                
-                <div class="mod-details px-6 pb-6">
-                    <div class="border-t border-gray-200 pt-6">
-                        <h4 class="font-semibold text-lg mb-3">Detailed Description</h4>
-                        <p class="text-gray-600 mb-4">The Task Whisperer helps users deconstruct vague ambitions or large projects into manageable actions, layered by urgency and impact. Ideal for decision paralysis or complex goal-setting.</p>
-                        
-                        <h4 class="font-semibold text-lg mb-3">Key Features</h4>
-                        <ul class="list-disc pl-5 space-y-2 text-gray-600 mb-4">
-                            <li>Auto-generates step-by-step breakdowns</li>
-                            <li>Tags steps by urgency, complexity, and priority</li>
-                            <li>Can track progress or export to task apps (Notion, Todoist, etc.)</li>
-                            <li>Optional integration with Smart Scheduler</li>
-                        </ul>
-                        
-                        <h4 class="font-semibold text-lg mb-3">Requirements</h4>
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="text-xs px-2 py-1 bg-gray-100 rounded-full">Minimum RAM: 4GB</span>
-                            <span class="text-xs px-2 py-1 bg-gray-100 rounded-full">Storage: 500MB</span>
-                            <span class="text-xs px-2 py-1 bg-gray-100 rounded-full">Version: 2.1+</span>
-                        </div>
-                        
-                        <button class="w-full bg-primary text-white py-2 rounded-md font-medium hover:bg-secondary transition-colors mt-4">
-                            Add to Cart
-                        </button>
-                    </div>
-                </div>
             </div>
             
             <!-- Emotional Check-In -->
-            <div class="mod-card bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300">
-                <div class="cursor-pointer mod-summary">
+            <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300">
+                <div class="cursor-pointer mod-summary" data-popup="emotional-checkin">
                     <div class="h-48 bg-gradient-to-r from-pink-500 to-rose-500 flex items-center justify-center">
                         <i class="fas fa-heartbeat text-white text-5xl"></i>
                     </div>
@@ -230,37 +260,11 @@
                         </div>
                     </div>
                 </div>
-                
-                <div class="mod-details px-6 pb-6">
-                    <div class="border-t border-gray-200 pt-6">
-                        <h4 class="font-semibold text-lg mb-3">Detailed Description</h4>
-                        <p class="text-gray-600 mb-4">A soft-spoken yet powerful tool for emotional intelligence. Prompts the user to reflect, recalibrate, and identify hidden emotional patterns through guided check-ins or silent journaling.</p>
-                        
-                        <h4 class="font-semibold text-lg mb-3">Key Features</h4>
-                        <ul class="list-disc pl-5 space-y-2 text-gray-600 mb-4">
-                            <li>Scheduled or triggered emotional prompts</li>
-                            <li>Tag feelings with underlying needs or themes</li>
-                            <li>Syncs with journal memory modules</li>
-                            <li>Calibrates tone and advice accordingly</li>
-                        </ul>
-                        
-                        <h4 class="font-semibold text-lg mb-3">Requirements</h4>
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="text-xs px-2 py-1 bg-gray-100 rounded-full">Minimum RAM: 2GB</span>
-                            <span class="text-xs px-2 py-1 bg-gray-100 rounded-full">Storage: 200MB</span>
-                            <span class="text-xs px-2 py-1 bg-gray-100 rounded-full">Version: 1.5+</span>
-                        </div>
-                        
-                        <button class="w-full bg-primary text-white py-2 rounded-md font-medium hover:bg-secondary transition-colors mt-4">
-                            Add to Cart
-                        </button>
-                    </div>
-                </div>
             </div>
             
             <!-- Narrated Video Generator -->
-            <div class="mod-card bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 border-2 border-premium">
-                <div class="cursor-pointer mod-summary">
+            <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 border-2 border-premium">
+                <div class="cursor-pointer mod-summary" data-popup="video-generator">
                     <div class="h-48 bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center">
                         <i class="fas fa-video text-white text-5xl"></i>
                     </div>
@@ -280,38 +284,11 @@
                         </div>
                     </div>
                 </div>
-                
-                <div class="mod-details px-6 pb-6">
-                    <div class="border-t border-gray-200 pt-6">
-                        <h4 class="font-semibold text-lg mb-3">Detailed Description</h4>
-                        <p class="text-gray-600 mb-4">Feed it your blog or journal, and get back a polished video with TTS voiceover and animated visuals. Perfect for creators, coaches, and legacy content.</p>
-                        
-                        <h4 class="font-semibold text-lg mb-3">Key Features</h4>
-                        <ul class="list-disc pl-5 space-y-2 text-gray-600 mb-4">
-                            <li>Supports ElevenLabs or Coqui XTTS voiceovers</li>
-                            <li>Auto-generates B-roll, animations, or slides</li>
-                            <li>Export in horizontal or vertical formats</li>
-                            <li>Batch-processing for multiple uploads</li>
-                        </ul>
-                        
-                        <h4 class="font-semibold text-lg mb-3">Requirements</h4>
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="text-xs px-2 py-1 bg-gray-100 rounded-full">GPU Recommended</span>
-                            <span class="text-xs px-2 py-1 bg-gray-100 rounded-full">Minimum RAM: 8GB</span>
-                            <span class="text-xs px-2 py-1 bg-gray-100 rounded-full">Storage: 2GB</span>
-                            <span class="text-xs px-2 py-1 bg-gray-100 rounded-full">Version: 3.2+</span>
-                        </div>
-                        
-                        <button class="w-full bg-premium text-dark py-2 rounded-md font-medium hover:bg-amber-400 transition-colors mt-4">
-                            Add to Cart
-                        </button>
-                    </div>
-                </div>
             </div>
             
             <!-- Autobiography Generator -->
-            <div class="mod-card bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300">
-                <div class="cursor-pointer mod-summary">
+            <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300">
+                <div class="cursor-pointer mod-summary" data-popup="autobiography-generator">
                     <div class="h-48 bg-gradient-to-r from-amber-500 to-orange-500 flex items-center justify-center">
                         <i class="fas fa-book text-white text-5xl"></i>
                     </div>
@@ -330,37 +307,11 @@
                         </div>
                     </div>
                 </div>
-                
-                <div class="mod-details px-6 pb-6">
-                    <div class="border-t border-gray-200 pt-6">
-                        <h4 class="font-semibold text-lg mb-3">Detailed Description</h4>
-                        <p class="text-gray-600 mb-4">Analyzes past entries, memory modules, and key moments, then weaves them into a powerful, emotionally coherent life narrative—chaptered, styled, and exportable.</p>
-                        
-                        <h4 class="font-semibold text-lg mb-3">Key Features</h4>
-                        <ul class="list-disc pl-5 space-y-2 text-gray-600 mb-4">
-                            <li>Custom voice and tone (e.g., poetic, factual, introspective)</li>
-                            <li>Auto-detects emotional arcs and turning points</li>
-                            <li>Export as PDF or Word doc</li>
-                            <li>Optional publishing to memory cloud</li>
-                        </ul>
-                        
-                        <h4 class="font-semibold text-lg mb-3">Requirements</h4>
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="text-xs px-2 py-1 bg-gray-100 rounded-full">Minimum RAM: 4GB</span>
-                            <span class="text-xs px-2 py-1 bg-gray-100 rounded-full">Storage: 1GB</span>
-                            <span class="text-xs px-2 py-1 bg-gray-100 rounded-full">Version: 2.0+</span>
-                        </div>
-                        
-                        <button class="w-full bg-primary text-white py-2 rounded-md font-medium hover:bg-secondary transition-colors mt-4">
-                            Add to Cart
-                        </button>
-                    </div>
-                </div>
             </div>
             
             <!-- Personality Painter -->
-            <div class="mod-card bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300">
-                <div class="cursor-pointer mod-summary">
+            <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300">
+                <div class="cursor-pointer mod-summary" data-popup="personality-painter">
                     <div class="h-48 bg-gradient-to-r from-green-500 to-teal-500 flex items-center justify-center">
                         <i class="fas fa-palette text-white text-5xl"></i>
                     </div>
@@ -377,80 +328,6 @@
                                 Add to Cart
                             </button>
                         </div>
-                    </div>
-                </div>
-                
-                <div class="mod-details px-6 pb-6">
-                    <div class="border-t border-gray-200 pt-6">
-                        <h4 class="font-semibold text-lg mb-3">Detailed Description</h4>
-                        <p class="text-gray-600 mb-4">Guided UI that lets users define traits, humor, instincts, and decision models. This mod simplifies the deep identity-building process with a beautiful, interactive interface.</p>
-                        
-                        <h4 class="font-semibold text-lg mb-3">Key Features</h4>
-                        <ul class="list-disc pl-5 space-y-2 text-gray-600 mb-4">
-                            <li>Drag-and-drop trait builder</li>
-                            <li>Live preview of responses as traits shift</li>
-                            <li>Syncs with identity modules</li>
-                            <li>Can export/import personality JSON files</li>
-                        </ul>
-                        
-                        <h4 class="font-semibold text-lg mb-3">Requirements</h4>
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="text-xs px-2 py-1 bg-gray-100 rounded-full">Minimum RAM: 4GB</span>
-                            <span class="text-xs px-2 py-1 bg-gray-100 rounded-full">Storage: 500MB</span>
-                            <span class="text-xs px-2 py-1 bg-gray-100 rounded-full">Version: 1.8+</span>
-                        </div>
-                        
-                        <button class="w-full bg-primary text-white py-2 rounded-md font-medium hover:bg-secondary transition-colors mt-4">
-                            Add to Cart
-                        </button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Memory Sculptor -->
-            <div class="mod-card bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300">
-                <div class="cursor-pointer mod-summary">
-                    <div class="h-48 bg-gradient-to-r from-indigo-500 to-blue-500 flex items-center justify-center">
-                        <i class="fas fa-brain text-white text-5xl"></i>
-                    </div>
-                    <div class="p-6">
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="text-xs px-2 py-1 rounded-full tag-mind-memory">🧠 Mind & Memory</span>
-                        </div>
-                        <h3 class="text-xl font-semibold text-dark mb-2">Memory Sculptor</h3>
-                        <p class="text-gray-600 mb-6">Edit, tag, and evolve long-term memories with search and organization tools.</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-primary font-medium">$59</span>
-                            <button class="text-sm bg-primary text-white px-4 py-2 rounded-md hover:bg-secondary transition-colors">
-                                Add to Cart
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="mod-details px-6 pb-6">
-                    <div class="border-t border-gray-200 pt-6">
-                        <h4 class="font-semibold text-lg mb-3">Detailed Description</h4>
-                        <p class="text-gray-600 mb-4">Think of it as a memory editor, powered by meaning. You can search, tag, edit, and prioritize memories—like rewriting the past to shape the future.</p>
-                        
-                        <h4 class="font-semibold text-lg mb-3">Key Features</h4>
-                        <ul class="list-disc pl-5 space-y-2 text-gray-600 mb-4">
-                            <li>Search by emotional tag, date, or theme</li>
-                            <li>Create new symbolic memories with prompts</li>
-                            <li>Auto-organize memories by pillar (truth, growth, etc.)</li>
-                            <li>Version control and rollback options</li>
-                        </ul>
-                        
-                        <h4 class="font-semibold text-lg mb-3">Requirements</h4>
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="text-xs px-2 py-1 bg-gray-100 rounded-full">Minimum RAM: 4GB</span>
-                            <span class="text-xs px-2 py-1 bg-gray-100 rounded-full">Storage: 1GB</span>
-                            <span class="text-xs px-2 py-1 bg-gray-100 rounded-full">Version: 2.3+</span>
-                        </div>
-                        
-                        <button class="w-full bg-primary text-white py-2 rounded-md font-medium hover:bg-secondary transition-colors mt-4">
-                            Add to Cart
-                        </button>
                     </div>
                 </div>
             </div>
@@ -673,7 +550,113 @@
         </div>
     </footer>
 
+    <!-- Popup Overlay -->
+    <div class="popup-overlay" id="popupOverlay">
+        <div class="popup-content">
+            <button class="close-popup">&times;</button>
+            <div id="popupContent"></div>
+        </div>
+    </div>
+
     <script>
+        // Card data for popups
+        const modData = {
+            "orion-voice": {
+                title: "Orion Voice Companion",
+                tagline: "Give your AI a voice—and a soul.",
+                price: "$29",
+                categories: ["Voice & Video", "Identity & Persona", "Productivity", "Social"],
+                summary: "Seamless spoken conversation with your AI. This mod enables always-on voice recognition using Whisper.cpp and replies using MeloTTS or Coqui. Activate Orion with your voice, speak naturally, and receive real-time responses with contextual awareness and personality. All offline, all yours.",
+                features: [
+                    "🎙️ Always-On Listening — Whisper.cpp listens for your speech and transcribes locally, with optional hotword detection ('Hey Orion')",
+                    "🗣️ Natural AI Replies — Your AI speaks back using high-quality local voices (MeloTTS or Coqui XTTS), customizable per user",
+                    "🧠 Integrated Context — Responses are informed by Orion's memory, persona, and recent conversations",
+                    "🔇 Privacy-Friendly — Quick toggle to disable mic access and enter 'Silent Mode' at any time",
+                    "🧬 Conversational Loop — Makes Orion feel like a living assistant you can talk to freely",
+                    "💡 Lightweight & Fast — Optimized for real-time interaction without interrupting your workflow",
+                    "🔧 Fully Local — No cloud APIs needed; optional ElevenLabs key support for premium voices"
+                ],
+                color: "from-blue-600 to-indigo-700",
+                icon: "fas fa-microphone-alt"
+            },
+            "task-whisperer": {
+                title: "Task Whisperer",
+                tagline: "Break down overwhelming projects into manageable steps",
+                price: "$19",
+                categories: ["Productivity & Focus"],
+                summary: "The Task Whisperer helps users deconstruct vague ambitions or large projects into manageable actions, layered by urgency and impact. Ideal for decision paralysis or complex goal-setting.",
+                features: [
+                    "Auto-generates step-by-step breakdowns",
+                    "Tags steps by urgency, complexity, and priority",
+                    "Can track progress or export to task apps (Notion, Todoist, etc.)",
+                    "Optional integration with Smart Scheduler"
+                ],
+                color: "from-blue-500 to-indigo-600",
+                icon: "fas fa-tasks"
+            },
+            "emotional-checkin": {
+                title: "Emotional Check-In",
+                tagline: "Internal radar for emotional weather",
+                price: "$12",
+                categories: ["Mind & Memory", "Boundaries & Emotional Health"],
+                summary: "A soft-spoken yet powerful tool for emotional intelligence. Prompts the user to reflect, recalibrate, and identify hidden emotional patterns through guided check-ins or silent journaling.",
+                features: [
+                    "Scheduled or triggered emotional prompts",
+                    "Tag feelings with underlying needs or themes",
+                    "Syncs with journal memory modules",
+                    "Calibrates tone and advice accordingly"
+                ],
+                color: "from-pink-500 to-rose-500",
+                icon: "fas fa-heartbeat"
+            },
+            "video-generator": {
+                title: "Narrated Video Generator",
+                tagline: "Convert text into professional videos",
+                price: "$129",
+                categories: ["Voice & Video", "Creative Tools"],
+                summary: "Feed it your blog or journal, and get back a polished video with TTS voiceover and animated visuals. Perfect for creators, coaches, and legacy content.",
+                features: [
+                    "Supports ElevenLabs or Coqui XTTS voiceovers",
+                    "Auto-generates B-roll, animations, or slides",
+                    "Export in horizontal or vertical formats",
+                    "Batch-processing for multiple uploads"
+                ],
+                color: "from-purple-500 to-pink-500",
+                icon: "fas fa-video",
+                premium: true
+            },
+            "autobiography-generator": {
+                title: "Autobiography Generator",
+                tagline: "Turn memories into cohesive life stories",
+                price: "$89",
+                categories: ["Mind & Memory", "Creative Tools"],
+                summary: "Analyzes past entries, memory modules, and key moments, then weaves them into a powerful, emotionally coherent life narrative—chaptered, styled, and exportable.",
+                features: [
+                    "Custom voice and tone (e.g., poetic, factual, introspective)",
+                    "Auto-detects emotional arcs and turning points",
+                    "Export as PDF or Word doc",
+                    "Optional publishing to memory cloud"
+                ],
+                color: "from-amber-500 to-orange-500",
+                icon: "fas fa-book"
+            },
+            "personality-painter": {
+                title: "Personality Painter",
+                tagline: "Define and refine your AI's personality",
+                price: "$29",
+                categories: ["Identity & Persona", "Creative Tools"],
+                summary: "Guided UI that lets users define traits, humor, instincts, and decision models. This mod simplifies the deep identity-building process with a beautiful, interactive interface.",
+                features: [
+                    "Drag-and-drop trait builder",
+                    "Live preview of responses as traits shift",
+                    "Syncs with identity modules",
+                    "Can export/import personality JSON files"
+                ],
+                color: "from-green-500 to-teal-500",
+                icon: "fas fa-palette"
+            }
+        };
+
         // Filter functionality
         document.querySelectorAll('.filter-btn').forEach(button => {
             button.addEventListener('click', () => {
@@ -719,45 +702,84 @@
             });
         });
         
-        // Card expansion functionality
+        // Popup functionality
+        const popupOverlay = document.getElementById('popupOverlay');
+        const popupContent = document.getElementById('popupContent');
+        
         document.querySelectorAll('.mod-summary').forEach(summary => {
             summary.addEventListener('click', (e) => {
-                // Don't expand if clicking on a button
+                // Don't open popup if clicking on a button
                 if (e.target.tagName === 'BUTTON' || e.target.closest('button')) {
                     return;
                 }
                 
-                const card = summary.closest('.mod-card');
-                const isExpanded = card.classList.contains('expanded');
+                const popupId = summary.getAttribute('data-popup');
+                const mod = modData[popupId];
                 
-                // Close all other expanded cards
-                document.querySelectorAll('.mod-card.expanded').forEach(expandedCard => {
-                    if (expandedCard !== card) {
-                        expandedCard.classList.remove('expanded');
-                    }
-                });
+                // Create popup content
+                popupContent.innerHTML = `
+                    <div class="h-64 bg-gradient-to-r ${mod.color} flex items-center justify-center">
+                        <i class="${mod.icon} text-white text-6xl"></i>
+                    </div>
+                    <div class="p-8">
+                        ${mod.premium ? '<div class="absolute top-4 right-4 bg-premium text-dark px-3 py-1 rounded-md text-sm font-bold">PREMIUM</div>' : ''}
+                        <h2 class="text-3xl font-bold text-dark mb-2">${mod.title}</h2>
+                        <p class="text-xl text-gray-600 mb-6">${mod.tagline}</p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            ${mod.categories.map(cat => `
+                                <span class="text-xs px-3 py-1 rounded-full bg-gray-100 text-gray-700">${cat}</span>
+                            `).join('')}
+                        </div>
+                        
+                        <div class="prose max-w-none mb-8">
+                            <p class="text-gray-700 mb-6">${mod.summary}</p>
+                            
+                            <h3 class="text-xl font-semibold text-dark mb-4">Features</h3>
+                            <ul class="space-y-3">
+                                ${mod.features.map(feature => `
+                                    <li class="flex items-start">
+                                        <span class="mr-3 mt-1">${feature.split('—')[0]}</span>
+                                        <span>${feature.split('—').slice(1).join('—')}</span>
+                                    </li>
+                                `).join('')}
+                            </ul>
+                        </div>
+                        
+                        <div class="flex justify-between items-center border-t border-gray-200 pt-6">
+                            <div class="text-2xl font-bold text-primary">${mod.price}</div>
+                            <button class="bg-primary text-white px-6 py-3 rounded-md text-lg font-semibold hover:bg-secondary transition-colors">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                `;
                 
-                // Toggle this card
-                if (!isExpanded) {
-                    card.classList.add('expanded');
-                    
-                    // Scroll to the card if it's not fully visible
-                    card.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'nearest'
-                    });
-                } else {
-                    card.classList.remove('expanded');
-                }
+                // Show popup
+                popupOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
             });
         });
         
-        // Close expanded cards when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('.mod-card')) {
-                document.querySelectorAll('.mod-card.expanded').forEach(card => {
-                    card.classList.remove('expanded');
-                });
+        // Close popup
+        document.querySelector('.close-popup').addEventListener('click', () => {
+            popupOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+        
+        // Close popup when clicking outside content
+        popupOverlay.addEventListener('click', (e) => {
+            if (e.target === popupOverlay) {
+                popupOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+        
+        // Close popup with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && popupOverlay.classList.contains('active')) {
+                popupOverlay.classList.remove('active');
+                document.body.style.overflow = '';
             }
         });
     </script>
