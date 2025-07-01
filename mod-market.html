@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mod Forge - Specialized Mod Marketplace</title>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --secondary: #8b5cf6;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --accent: #7c3aed;
+            --glow: rgba(99, 102, 241, 0.3);
+            --premium: #f59e0b;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 var(--glow); }
+            70% { box-shadow: 0 0 0 10px rgba(99, 102, 241, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0); }
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            background-color: rgba(15, 23, 42, 0.95);
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--light);
+            text-decoration: none;
+        }
+        
+        .logo-icon {
+            color: var(--primary);
+            font-size: 1.8rem;
+        }
+        
+        nav ul {
+            display: flex;
+            gap: 25px;
+            list-style: none;
+        }
+        
+        nav a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        nav a:hover {
+            color: var(--primary);
+        }
+        
+        .nav-cta {
+            background: var(--primary);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+        
+        .nav-cta:hover {
+            background: var(--secondary);
+            color: white;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .hero {
+            padding: 80px 0 40px;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(15, 23, 42, 0.95) 100%);
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, var(--primary), var(--secondary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .hero p {
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        /* Filters */
+        .filters {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 40px 0;
+            padding: 15px;
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 8px;
+            border: 1px solid rgba(124, 58, 237, 0.2);
+        }
+        
+        .filter-btn {
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--light);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+        
+        /* Mod Grid */
+        .mod-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 20px 0 40px;
+        }
+        
+        .mod-card {
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .mod-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .mod-icon {
+            width: 100%;
+            height: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--dark) 0%, var(--accent) 100%);
+            font-size: 3rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .premium-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--premium);
+            color: var(--dark);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+        
+        .mod-content {
+            padding: 20px;
+        }
+        
+        .mod-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--light);
+        }
+        
+        .mod-content p {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            min-height: 60px;
+        }
+        
+        .mod-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .mod-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        
+        .mod-tag {
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .tag-productivity {
+            background: rgba(134, 239, 172, 0.2);
+            color: #86efac;
+        }
+        
+        .tag-mental-health {
+            background: rgba(252, 165, 165, 0.2);
+            color: #fca5a5;
+        }
+        
+        .tag-content-creation {
+            background: rgba(167, 139, 250, 0.2);
+            color: #a78bfa;
+        }
+        
+        .tag-writing {
+            background: rgba(110, 231, 183, 0.2);
+            color: #6ee7b7;
+        }
+        
+        .tag-personalization {
+            background: rgba(249, 168, 212, 0.2);
+            color: #f9a8d4;
+        }
+        
+        .tag-memory {
+            background: rgba(253, 230, 138, 0.2);
+            color: #fde68a;
+        }
+        
+        .tag-social {
+            background: rgba(147, 197, 253, 0.2);
+            color: #93c5fd;
+        }
+        
+        .tag-video {
+            background: rgba(244, 114, 182, 0.2);
+            color: #f472b6;
+        }
+        
+        .tag-infrastructure {
+            background: rgba(167, 243, 208, 0.2);
+            color: #a7f3d0;
+        }
+        
+        .action-btns {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .buy-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: var(--primary);
+            color: white;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            flex: 1;
+            text-align: center;
+        }
+        
+        .buy-btn:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+        
+        .buy-btn.premium {
+            background: var(--premium);
+            color: var(--dark);
+        }
+        
+        .buy-btn.premium:hover {
+            background: #fbbf24;
+        }
+        
+        .trial-btn {
+            display: inline-block;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 0.9rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .trial-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Expanded Card Styles */
+        .mod-card.expanded {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            z-index: 1000;
+            background: var(--dark);
+            border: 2px solid var(--primary);
+            box-shadow: 0 0 30px rgba(99, 102, 241, 0.5);
+        }
+        
+        .mod-card.expanded .mod-icon {
+            height: 200px;
+            font-size: 4rem;
+        }
+        
+        .mod-card.expanded .mod-content {
+            padding: 30px;
+        }
+        
+        .mod-card.expanded .full-description {
+            margin-bottom: 25px;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.7;
+        }
+        
+        .mod-card.expanded .key-features {
+            margin-bottom: 25px;
+        }
+        
+        .mod-card.expanded .key-features h4 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+        
+        .mod-card.expanded .key-features ul {
+            list-style-type: none;
+        }
+        
+        .mod-card.expanded .key-features li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 25px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .mod-card.expanded .key-features li:before {
+            content: "•";
+            color: var(--primary);
+            position: absolute;
+            left: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 999;
+            display: none;
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--primary);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1001;
+            border: none;
+            font-size: 1rem;
+        }
+        
+        /* Bundle Section */
+        .bundles {
+            margin: 60px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 40px;
+            color: var(--light);
+        }
+        
+        .bundle-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .bundle-card {
+            background: rgba(30, 41, 59, 0.7);
+            border-radius: 12px;
+            padding: 25px;
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .bundle-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            border-color: var(--primary);
+        }
+        
+        .bundle-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+        
+        .bundle-price {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--light);
+        }
+        
+        .bundle-savings {
+            color: #86efac;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+        
+        .bundle-features {
+            list-style: none;
+            margin-bottom: 25px;
+        }
+        
+        .bundle-features li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 25px;
+        }
+        
+        .bundle-features li:before {
+            content: "✓";
+            color: var(--primary);
+            position: absolute;
+            left: 0;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .mod-grid, .bundle-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            nav ul {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .header-container {
+                position: relative;
+            }
+            
+            .action-btns {
+                flex-direction: column;
+            }
+            
+            .mod-card.expanded {
+                width: 95%;
+                max-height: 85vh;
+            }
+            
+            .filters {
+                justify-content: flex-start;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="#" class="logo">
+                <i class="fas fa-puzzle-piece logo-icon"></i>
+                <span>Mod Forge</span>
+            </a>
+            
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav>
+                <ul>
+                    <li><a href="#mods">All Mods</a></li>
+                    <li><a href="#bundles">Bundles</a></li>
+                    <li><a href="#categories">Categories</a></li>
+                    <li><a href="#support">Support</a></li>
+                    <li><a href="#" class="nav-cta">My Mods</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <div class="container">
+            <h1>Specialized Mod Marketplace</h1>
+            <p>Enhance your experience with powerful mods. Filter by category to find exactly what you need.</p>
+        </div>
+    </section>
+    
+    <main class="container">
+        <section id="mods">
+            <div class="filters">
+                <button class="filter-btn active">All Mods</button>
+                <button class="filter-btn">Productivity</button>
+                <button class="filter-btn">Mental Health</button>
+                <button class="filter-btn">Content Creation</button>
+                <button class="filter-btn">Writing</button>
+                <button class="filter-btn">Personalization</button>
+                <button class="filter-btn">Memory</button>
+                <button class="filter-btn">Social</button>
+                <button class="filter-btn">Video</button>
+                <button class="filter-btn">Infrastructure</button>
+            </div>
+            
+            <div class="mod-grid">
+                <!-- Task Whisperer -->
+                <div class="mod-card" data-card="task-whisperer">
+                    <div class="mod-icon">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <div class="mod-content">
+                        <div class="mod-tags">
+                            <span class="mod-tag tag-productivity">Productivity</span>
+                        </div>
+                        <h3>Task Whisperer</h3>
+                        <p>Break down overwhelming projects into step-by-step microactions with priority tagging.</p>
+                        <div class="mod-price">$19</div>
+                        <div class="action-btns">
+                            <a href="#" class="buy-btn">Add to Cart</a>
+                            <a href="#" class="trial-btn">Details</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Emotional Check-In -->
+                <div class="mod-card" data-card="emotional-checkin">
+                    <div class="mod-icon">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <div class="mod-content">
+                        <div class="mod-tags">
+                            <span class="mod-tag tag-mental-health">Mental Health</span>
+                        </div>
+                        <h3>Emotional Check-In</h3>
+                        <p>Internal radar for emotional weather with guided check-ins and pattern detection.</p>
+                        <div class="mod-price">$12</div>
+                        <div class="action-btns">
+                            <a href="#" class="buy-btn">Add to Cart</a>
+                            <a href="#" class="trial-btn">Details</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Narrated Video Generator -->
+                <div class="mod-card" data-card="video-generator">
+                    <div class="mod-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <div class="premium-badge">Premium</div>
+                    <div class="mod-content">
+                        <div class="mod-tags">
+                            <span class="mod-tag tag-content-creation">Content Creation</span>
+                            <span class="mod-tag tag-video">Video</span>
+                        </div>
+                        <h3>Narrated Video Generator</h3>
+                        <p>Convert text into narrated video content with automated visuals and voiceovers.</p>
+                        <div class="mod-price">$129</div>
+                        <div class="action-btns">
+                            <a href="#" class="buy-btn premium">Add to Cart</a>
+                            <a href="#" class="trial-btn">Details</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Autobiography Generator -->
+                <div class="mod-card" data-card="autobiography-generator">
+                    <div class="mod-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="mod-content">
+                        <div class="mod-tags">
+                            <span class="mod-tag tag-writing">Writing</span>
+                            <span class="mod-tag tag-memory">Memory</span>
+                        </div>
+                        <h3>Autobiography Generator</h3>
+                        <p>Turn journal entries into cohesive life stories with emotional arc detection.</p>
+                        <div class="mod-price">$89</div>
+                        <div class="action-btns">
+                            <a href="#" class="buy-btn">Add to Cart</a>
+                            <a href="#" class="trial-btn">Details</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Clone Personality Painter -->
+                <div class="mod-card" data-card="personality-painter">
+                    <div class="mod-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <div class="mod-content">
+                        <div class="mod-tags">
+                            <span class="mod-tag tag-personalization">Personalization</span>
+                        </div>
+                        <h3>Personality Painter</h3>
+                        <p>Interactive UI to define traits, humor, and decision models with live preview.</p>
+                        <div class="mod-price">$29</div>
+                        <div class="action-btns">
+                            <a href="#" class="buy-btn">Add to Cart</a>
+                            <a href="#" class="trial-btn">Details</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Memory Sculptor -->
+                <div class="mod-card" data-card="memory-sculptor">
+                    <div class="mod-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <div class="mod-content">
+                        <div class="mod-tags">
+                            <span class="mod-tag tag-memory">Memory</span>
+                        </div>
+                        <h3>Memory Sculptor</h3>
+                        <p>Edit, tag, and evolve long-term memories with search and organization tools.</p>
+                        <div class="mod-price">$59</div>
+                        <div class="action-btns">
+                            <a href="#" class="buy-btn">Add to Cart</a>
+                            <a href="#" class="trial-btn">Details</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Boundary Defender -->
+                <div class="mod-card" data-card="boundary-defender">
+                    <div class="mod-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="mod-content">
+                        <div class="mod-tags">
+                            <span class="mod-tag tag-social">Social</span>
+                            <span class="mod-tag tag-mental-health">Mental Health</span>
+                        </div>
+                        <h3>Boundary Defender</h3>
+                        <p>Detects toxic requests and emotional manipulation in conversations.</p>
+                        <div class="mod-price">$15</div>
+                        <div class="action-btns">
+                            <a href="#" class="buy-btn">Add to Cart</a>
+                            <a href="#" class="trial-btn">Details</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Real-Time Video Generator -->
+                <div class="mod-card" data-card="realtime-video">
+                    <div class="mod-icon">
+                        <i class="fas fa-film"></i>
+                    </div>
+                    <div class="premium-badge">Premium</div>
+                    <div class="mod-content">
+                        <div class="mod-tags">
+                            <span class="mod-tag tag-content-creation">Content Creation</span>
+                            <span class="mod-tag tag-video">Video</span>
+                        </div>
+                        <h3>Real-Time Video Generator</h3>
+                        <p>Convert live prompts into animated avatar-led videos with lip sync.</p>
+                        <div class="mod-price">$199</div>
+                        <div class="action-btns">
+                            <a href="#" class="buy-btn premium">Add to Cart</a>
+                            <a href="#" class="trial-btn">Details</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Social Analyzer Toolkit -->
+                <div class="mod-card" data-card="social-analyzer">
+                    <div class="mod-icon">
+                        <i class="fas fa-chess"></i>
+                    </div>
+                    <div class="mod-content">
+                        <div class="mod-tags">
+                            <span class="mod-tag tag-social">Social</span>
+                        </div>
+                        <h3>Social Analyzer Toolkit</h3>
+                        <p>Detects status games, motives, and hidden dynamics in text conversations.</p>
+                        <div class="mod-price">$69</div>
+                        <div class="action-btns">
+                            <a href="#" class="buy-btn">Add to Cart</a>
+                            <a href="#" class="trial-btn">Details</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Symbolic Memory Auto-Tagger -->
+                <div class="mod-card" data-card="memory-tagger">
+                    <div class="mod-icon">
+                        <i class="fas fa-tags"></i>
+                    </div>
+                    <div class="mod-content">
+                        <div class="mod-tags">
+                            <span class="mod-tag tag-memory">Memory</span>
+                        </div>
+                        <h3>Memory Auto-Tagger</h3>
+                        <p>Automatically tags entries with themes, lessons, and emotional weights.</p>
+                        <div class="mod-price">$49</div>
+                        <div class="action-btns">
+                            <a href="#" class="buy-btn">Add to Cart</a>
+                            <a href="#" class="trial-btn">Details</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Smart Scheduler -->
+                <div class="mod-card" data-card="smart-scheduler">
+                    <div class="mod-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <div class="mod-content">
+                        <div class="mod-tags">
+                            <span class="mod-tag tag-productivity">Productivity</span>
+                        </div>
+                        <h3>Smart Scheduler</h3>
+                        <p>Adaptive daily planning that schedules tasks around your real energy levels.</p>
+                        <div class="mod-price">$25</div>
+                        <div class="action-btns">
+                            <a href="#" class="buy-btn">Add to Cart</a>
+                            <a href="#" class="trial-btn">Details</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Orion Downloader & Mod Manager -->
+                <div class="mod-card" data-card="mod-manager">
+                    <div class="mod-icon">
+                        <i class="fas fa-download"></i>
+                    </div>
+                    <div class="mod-content">
+                        <div class="mod-tags">
+                            <span class="mod-tag tag-infrastructure">Infrastructure</span>
+                        </div>
+                        <h3>Mod Manager</h3>
+                        <p>Seamless mod installation, hardware checking, and version control.</p>
+                        <div class="mod-price">$39</div>
+                        <div class="action-btns">
+                            <a href="#" class="buy-btn">Add to Cart</a>
+                            <a href="#" class="trial-btn">Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="bundles" class="bundles">
+            <h2 class="section-title">Mod Bundles</h2>
+            <p class="section-subtitle" style="text-align: center; margin-bottom: 40px; color: rgba(255,255,255,0.7);">Save when you buy multiple mods together</p>
+            
+            <div class="bundle-grid">
+                <!-- Productivity Pack -->
+                <div class="bundle-card">
+                    <h3>Productivity Pack</h3>
+                    <div class="bundle-price">$49</div>
+                    <div class="bundle-savings">Save $15 vs buying separately</div>
+                    <ul class="bundle-features">
+                        <li>Task Whisperer</li>
+                        <li>Smart Scheduler</li>
+                        <li>Mod Manager</li>
+                    </ul>
+                    <a href="#" class="buy-btn">Get This Bundle</a>
+                </div>
+                
+                <!-- Content Creator Suite -->
+                <div class="bundle-card" style="border: 2px solid var(--premium);">
+                    <h3>Content Creator Suite</h3>
+                    <div class="bundle-price">$249</div>
+                    <div class="bundle-savings">Save $79 vs buying separately</div>
+                    <ul class="bundle-features">
+                        <li>Narrated Video Generator</li>
+                        <li>Real-Time Video Generator</li>
+                        <li>Autobiography Generator</li>
+                        <li>Social Analyzer Toolkit</li>
+                    </ul>
+                    <a href="#" class="buy-btn premium">Get This Bundle</a>
+                </div>
+                
+                <!-- Personal Growth Bundle -->
+                <div class="bundle-card">
+                    <h3>Personal Growth Bundle</h3>
+                    <div class="bundle-price">$89</div>
+                    <div class="bundle-savings">Save $26 vs buying separately</div>
+                    <ul class="bundle-features">
+                        <li>Emotional Check-In</li>
+                        <li>Memory Sculptor</li>
+                        <li>Boundary Defender</li>
+                        <li>Memory Auto-Tagger</li>
+                    </ul>
+                    <a href="#" class="buy-btn">Get This Bundle</a>
+                </div>
+                
+                <!-- Complete Collection -->
+                <div class="bundle-card" style="border: 2px solid var(--premium);">
+                    <h3>Complete Collection</h3>
+                    <div class="bundle-price">$349</div>
+                    <div class="bundle-savings">Save $200+ vs buying separately</div>
+                    <ul class="bundle-features">
+                        <li>All 12 Mods Included</li>
+                        <li>Free future updates</li>
+                        <li>Priority support</li>
+                        <li>Early access to new mods</li>
+                    </ul>
+                    <a href="#" class="buy-btn premium">Get Complete Collection</a>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <script>
+        // Card data with full descriptions and key features
+        const cardData = {
+            "task-whisperer": {
+                fullDescription: "The Task Whisperer helps users deconstruct vague ambitions or large projects into manageable actions, layered by urgency and impact. Ideal for decision paralysis or complex goal-setting.",
+                keyFeatures: [
+                    "Auto-generates step-by-step breakdowns",
+                    "Tags steps by urgency, complexity, and priority",
+                    "Can track progress or export to task apps (Notion, Todoist, etc.)",
+                    "Optional integration with Smart Scheduler"
+                ]
+            },
+            "emotional-checkin": {
+                fullDescription: "A soft-spoken yet powerful tool for emotional intelligence. Prompts the user to reflect, recalibrate, and identify hidden emotional patterns through guided check-ins or silent journaling.",
+                keyFeatures: [
+                    "Scheduled or triggered emotional prompts",
+                    "Tag feelings with underlying needs or themes",
+                    "Syncs with journal memory modules",
+                    "Calibrates tone and advice accordingly"
+                ]
+            },
+            "video-generator": {
+                fullDescription: "Feed it your blog or journal, and get back a polished video with TTS voiceover and animated visuals. Perfect for creators, coaches, and legacy content.",
+                keyFeatures: [
+                    "Supports ElevenLabs or Coqui XTTS voiceovers",
+                    "Auto-generates B-roll, animations, or slides",
+                    "Export in horizontal or vertical formats",
+                    "Batch-processing for multiple uploads"
+                ]
+            },
+            "autobiography-generator": {
+                fullDescription: "Analyzes past entries, memory modules, and key moments, then weaves them into a powerful, emotionally coherent life narrative—chaptered, styled, and exportable.",
+                keyFeatures: [
+                    "Custom voice and tone (e.g., poetic, factual, introspective)",
+                    "Auto-detects emotional arcs and turning points",
+                    "Export as PDF or Word doc",
+                    "Optional publishing to memory cloud"
+                ]
+            },
+            "personality-painter": {
+                fullDescription: "Guided UI that lets users define traits, humor, instincts, and decision models. This mod simplifies the deep identity-building process with a beautiful, interactive interface.",
+                keyFeatures: [
+                    "Drag-and-drop trait builder",
+                    "Live preview of responses as traits shift",
+                    "Syncs with identity modules",
+                    "Can export/import personality JSON files"
+                ]
+            },
+            "memory-sculptor": {
+                fullDescription: "Think of it as a memory editor, powered by meaning. You can search, tag, edit, and prioritize memories—like rewriting the past to shape the future.",
+                keyFeatures: [
+                    "Search by emotional tag, date, or theme",
+                    "Create new symbolic memories with prompts",
+                    "Auto-organize memories by pillar (truth, growth, etc.)",
+                    "Version control and rollback options"
+                ]
+            },
+            "boundary-defender": {
+                fullDescription: "This lightweight guardian watches for gaslighting, guilt-tripping, and subtle coercion. When activated, it analyzes input and alerts the user—or responds diplomatically but firmly.",
+                keyFeatures: [
+                    "Detects manipulation or disrespectful tone",
+                    "Suggests calibrated responses ('clarify,' 'deflect,' 'withdraw')",
+                    "Works silently or can be toggled to auto-respond",
+                    "Learns over time based on user feedback"
+                ]
+            },
+            "realtime-video": {
+                fullDescription: "Pair this with voice synthesis and avatar tools like SadTalker or D-ID to create a real-time, speaking presence. Useful for YouTube, courses, or virtual guides.",
+                keyFeatures: [
+                    "Compatible with webcam-style avatars or custom renders",
+                    "Syncs voice and lip movement",
+                    "Script input or real-time mode",
+                    "Export in MP4"
+                ]
+            },
+            "social-analyzer": {
+                fullDescription: "Reads between the lines. This mod dissects conversations—online or in life—for power plays, emotional shifts, or inconsistencies. It helps users think five moves ahead.",
+                keyFeatures: [
+                    "Status/motive detection in messages",
+                    "Emotional temperature readings",
+                    "Suggested response tactics (deflect, mirror, escalate)",
+                    "Memory tagging for future context"
+                ]
+            },
+            "memory-tagger": {
+                fullDescription: "Don't just record memories—give them shape. This mod uses NLP and emotional intelligence to tag your entries with themes, metaphors, and meaning.",
+                keyFeatures: [
+                    "Theme detection (e.g., loss, growth, betrayal)",
+                    "Suggests symbolic framing",
+                    "Links related entries and turning points",
+                    "Trains on user tagging style over time"
+                ]
+            },
+            "smart-scheduler": {
+                fullDescription: "Not just a calendar—an adaptive system that respects your real life. Helps organize work, self-care, and exploration based on your past patterns and preferences.",
+                keyFeatures: [
+                    "Adaptive daily planning",
+                    "Blocks for work, deep focus, rest, reflection",
+                    "Syncs with Task Whisperer",
+                    "Mood-aware rebalancing if overwhelmed"
+                ]
+            },
+            "mod-manager": {
+                fullDescription: "The central control hub for mod management. Detects system specs, recommends compatible mods, and lets users install with one click. Also handles mod updates and rollbacks.",
+                keyFeatures: [
+                    "Auto-checks VRAM, RAM, CPU",
+                    "Lists compatible or optimal mods",
+                    "Manual or auto-update modes",
+                    "UI with toggle-based install management"
+                ]
+            }
+        };
+
+        // Filter functionality
+        document.querySelectorAll('.filter-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                button.classList.add('active');
+                
+                const filter = button.textContent.trim();
+                const modCards = document.querySelectorAll('.mod-card:not(.expanded)');
+                
+                if (filter === 'All Mods') {
+                    modCards.forEach(card => {
+                        card.style.display = 'block';
+                    });
+                } else {
+                    modCards.forEach(card => {
+                        const tags = card.querySelectorAll('.mod-tag');
+                        let hasTag = false;
+                        
+                        tags.forEach(tag => {
+                            if (tag.textContent.trim() === filter) {
+                                hasTag = true;
+                            }
+                        });
+                        
+                        card.style.display = hasTag ? 'block' : 'none';
+                    });
+                }
+            });
+        });
+        
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const nav = document.querySelector('nav ul');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            nav.style.display = nav.style.display === 'block' ? 'none' : 'block';
+        });
+        
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
+                    nav.style.display = 'none';
+                }
+            });
+        });
+        
+        // Card expansion functionality
+        const overlay = document.getElementById('overlay');
+        
+        document.querySelectorAll('.mod-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                // Don't expand if clicking on a button
+                if (e.target.closest('.buy-btn') || e.target.closest('.trial-btn')) {
+                    return;
+                }
+                
+                const cardType = this.getAttribute('data-card');
+                const data = cardData[cardType];
+                
+                // Create expanded card
+                const expandedCard = this.cloneNode(true);
+                expandedCard.classList.add('expanded');
+                
+                // Add close button
+                const closeBtn = document.createElement('button');
+                closeBtn.className = 'close-btn';
+                closeBtn.innerHTML = '&times;';
+                expandedCard.appendChild(closeBtn);
+                
+                // Add full description and key features
+                const content = expandedCard.querySelector('.mod-content');
+                
+                const fullDesc = document.createElement('div');
+                fullDesc.className = 'full-description';
+                fullDesc.innerHTML = `<strong>Full Description:</strong><br>${data.fullDescription}`;
+                
+                const keyFeatures = document.createElement('div');
+                keyFeatures.className = 'key-features';
+                keyFeatures.innerHTML = '<h4>Key Features:</h4><ul>' + 
+                    data.keyFeatures.map(feature => `<li>${feature}</li>`).join('') + 
+                    '</ul>';
+                
+                content.insertBefore(fullDesc, content.querySelector('.mod-price'));
+                content.insertBefore(keyFeatures, content.querySelector('.action-btns'));
+                
+                // Show overlay and expanded card
+                overlay.style.display = 'block';
+                document.body.appendChild(expandedCard);
+                document.body.style.overflow = 'hidden';
+                
+                // Close functionality
+                closeBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    overlay.style.display = 'none';
+                    expandedCard.remove();
+                    document.body.style.overflow = '';
+                });
+                
+                overlay.addEventListener('click', function() {
+                    overlay.style.display = 'none';
+                    expandedCard.remove();
+                    document.body.style.overflow = '';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
