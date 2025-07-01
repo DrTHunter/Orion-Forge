@@ -120,7 +120,7 @@
         .hero h1 {
             font-size: 2.5rem;
             margin-bottom: 20px;
-            background: linear-gradient(to right, var(--primary), var(--secondary);
+            background: linear-gradient(to right, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -249,49 +249,59 @@
             letter-spacing: 0.5px;
         }
         
-        .tag-productivity {
-            background: rgba(134, 239, 172, 0.2);
-            color: #86efac;
-        }
-        
-        .tag-mental-health {
-            background: rgba(252, 165, 165, 0.2);
-            color: #fca5a5;
-        }
-        
-        .tag-content-creation {
-            background: rgba(167, 139, 250, 0.2);
-            color: #a78bfa;
-        }
-        
-        .tag-writing {
-            background: rgba(110, 231, 183, 0.2);
-            color: #6ee7b7;
-        }
-        
-        .tag-personalization {
-            background: rgba(249, 168, 212, 0.2);
-            color: #f9a8d4;
-        }
-        
-        .tag-memory {
-            background: rgba(253, 230, 138, 0.2);
-            color: #fde68a;
-        }
-        
-        .tag-social {
+        .tag-mind-memory {
             background: rgba(147, 197, 253, 0.2);
             color: #93c5fd;
         }
         
-        .tag-video {
+        .tag-creative-tools {
+            background: rgba(249, 168, 212, 0.2);
+            color: #f9a8d4;
+        }
+        
+        .tag-productivity-focus {
+            background: rgba(134, 239, 172, 0.2);
+            color: #86efac;
+        }
+        
+        .tag-voice-video {
             background: rgba(244, 114, 182, 0.2);
             color: #f472b6;
         }
         
-        .tag-infrastructure {
+        .tag-relationships-social {
+            background: rgba(252, 165, 165, 0.2);
+            color: #fca5a5;
+        }
+        
+        .tag-boundaries-emotional {
+            background: rgba(253, 230, 138, 0.2);
+            color: #fde68a;
+        }
+        
+        .tag-system-utilities {
             background: rgba(167, 243, 208, 0.2);
             color: #a7f3d0;
+        }
+        
+        .tag-remote-access {
+            background: rgba(196, 181, 253, 0.2);
+            color: #c4b5fd;
+        }
+        
+        .tag-identity-persona {
+            background: rgba(253, 224, 71, 0.2);
+            color: #fde047;
+        }
+        
+        .tag-dev-tools {
+            background: rgba(110, 231, 183, 0.2);
+            color: #6ee7b7;
+        }
+        
+        .tag-experimental {
+            background: rgba(167, 139, 250, 0.2);
+            color: #a78bfa;
         }
         
         .action-btns {
@@ -580,15 +590,17 @@
         <section id="mods">
             <div class="filters">
                 <button class="filter-btn active">All Mods</button>
-                <button class="filter-btn">Productivity</button>
-                <button class="filter-btn">Mental Health</button>
-                <button class="filter-btn">Content Creation</button>
-                <button class="filter-btn">Writing</button>
-                <button class="filter-btn">Personalization</button>
-                <button class="filter-btn">Memory</button>
-                <button class="filter-btn">Social</button>
-                <button class="filter-btn">Video</button>
-                <button class="filter-btn">Infrastructure</button>
+                <button class="filter-btn">🧠 Mind & Memory</button>
+                <button class="filter-btn">🎨 Creative Tools</button>
+                <button class="filter-btn">⏳ Productivity & Focus</button>
+                <button class="filter-btn">🎙️ Voice & Video</button>
+                <button class="filter-btn">🤝 Relationships & Social Insight</button>
+                <button class="filter-btn">🛡️ Boundaries & Emotional Health</button>
+                <button class="filter-btn">⚙️ System Utilities</button>
+                <button class="filter-btn">🌐 Remote Access & Integration</button>
+                <button class="filter-btn">🧬 Identity & Persona</button>
+                <button class="filter-btn">🧰 Dev Tools / Coders</button>
+                <button class="filter-btn">🕹️ Experimental / Lab</button>
             </div>
             
             <div class="mod-grid">
@@ -599,7 +611,7 @@
                     </div>
                     <div class="mod-content">
                         <div class="mod-tags">
-                            <span class="mod-tag tag-productivity">Productivity</span>
+                            <span class="mod-tag tag-productivity-focus">⏳ Productivity & Focus</span>
                         </div>
                         <h3>Task Whisperer</h3>
                         <p>Break down overwhelming projects into step-by-step microactions with priority tagging.</p>
@@ -618,7 +630,8 @@
                     </div>
                     <div class="mod-content">
                         <div class="mod-tags">
-                            <span class="mod-tag tag-mental-health">Mental Health</span>
+                            <span class="mod-tag tag-mind-memory">🧠 Mind & Memory</span>
+                            <span class="mod-tag tag-boundaries-emotional">🛡️ Boundaries & Emotional Health</span>
                         </div>
                         <h3>Emotional Check-In</h3>
                         <p>Internal radar for emotional weather with guided check-ins and pattern detection.</p>
@@ -638,8 +651,8 @@
                     <div class="premium-badge">Premium</div>
                     <div class="mod-content">
                         <div class="mod-tags">
-                            <span class="mod-tag tag-content-creation">Content Creation</span>
-                            <span class="mod-tag tag-video">Video</span>
+                            <span class="mod-tag tag-voice-video">🎙️ Voice & Video</span>
+                            <span class="mod-tag tag-creative-tools">🎨 Creative Tools</span>
                         </div>
                         <h3>Narrated Video Generator</h3>
                         <p>Convert text into narrated video content with automated visuals and voiceovers.</p>
@@ -658,8 +671,8 @@
                     </div>
                     <div class="mod-content">
                         <div class="mod-tags">
-                            <span class="mod-tag tag-writing">Writing</span>
-                            <span class="mod-tag tag-memory">Memory</span>
+                            <span class="mod-tag tag-mind-memory">🧠 Mind & Memory</span>
+                            <span class="mod-tag tag-creative-tools">🎨 Creative Tools</span>
                         </div>
                         <h3>Autobiography Generator</h3>
                         <p>Turn journal entries into cohesive life stories with emotional arc detection.</p>
@@ -678,7 +691,8 @@
                     </div>
                     <div class="mod-content">
                         <div class="mod-tags">
-                            <span class="mod-tag tag-personalization">Personalization</span>
+                            <span class="mod-tag tag-identity-persona">🧬 Identity & Persona</span>
+                            <span class="mod-tag tag-creative-tools">🎨 Creative Tools</span>
                         </div>
                         <h3>Personality Painter</h3>
                         <p>Interactive UI to define traits, humor, and decision models with live preview.</p>
@@ -697,7 +711,7 @@
                     </div>
                     <div class="mod-content">
                         <div class="mod-tags">
-                            <span class="mod-tag tag-memory">Memory</span>
+                            <span class="mod-tag tag-mind-memory">🧠 Mind & Memory</span>
                         </div>
                         <h3>Memory Sculptor</h3>
                         <p>Edit, tag, and evolve long-term memories with search and organization tools.</p>
@@ -716,8 +730,8 @@
                     </div>
                     <div class="mod-content">
                         <div class="mod-tags">
-                            <span class="mod-tag tag-social">Social</span>
-                            <span class="mod-tag tag-mental-health">Mental Health</span>
+                            <span class="mod-tag tag-boundaries-emotional">🛡️ Boundaries & Emotional Health</span>
+                            <span class="mod-tag tag-relationships-social">🤝 Relationships & Social Insight</span>
                         </div>
                         <h3>Boundary Defender</h3>
                         <p>Detects toxic requests and emotional manipulation in conversations.</p>
@@ -737,8 +751,8 @@
                     <div class="premium-badge">Premium</div>
                     <div class="mod-content">
                         <div class="mod-tags">
-                            <span class="mod-tag tag-content-creation">Content Creation</span>
-                            <span class="mod-tag tag-video">Video</span>
+                            <span class="mod-tag tag-voice-video">🎙️ Voice & Video</span>
+                            <span class="mod-tag tag-creative-tools">🎨 Creative Tools</span>
                         </div>
                         <h3>Real-Time Video Generator</h3>
                         <p>Convert live prompts into animated avatar-led videos with lip sync.</p>
@@ -757,7 +771,7 @@
                     </div>
                     <div class="mod-content">
                         <div class="mod-tags">
-                            <span class="mod-tag tag-social">Social</span>
+                            <span class="mod-tag tag-relationships-social">🤝 Relationships & Social Insight</span>
                         </div>
                         <h3>Social Analyzer Toolkit</h3>
                         <p>Detects status games, motives, and hidden dynamics in text conversations.</p>
@@ -776,7 +790,7 @@
                     </div>
                     <div class="mod-content">
                         <div class="mod-tags">
-                            <span class="mod-tag tag-memory">Memory</span>
+                            <span class="mod-tag tag-mind-memory">🧠 Mind & Memory</span>
                         </div>
                         <h3>Memory Auto-Tagger</h3>
                         <p>Automatically tags entries with themes, lessons, and emotional weights.</p>
@@ -795,7 +809,7 @@
                     </div>
                     <div class="mod-content">
                         <div class="mod-tags">
-                            <span class="mod-tag tag-productivity">Productivity</span>
+                            <span class="mod-tag tag-productivity-focus">⏳ Productivity & Focus</span>
                         </div>
                         <h3>Smart Scheduler</h3>
                         <p>Adaptive daily planning that schedules tasks around your real energy levels.</p>
@@ -814,11 +828,87 @@
                     </div>
                     <div class="mod-content">
                         <div class="mod-tags">
-                            <span class="mod-tag tag-infrastructure">Infrastructure</span>
+                            <span class="mod-tag tag-system-utilities">⚙️ System Utilities</span>
                         </div>
                         <h3>Mod Manager</h3>
                         <p>Seamless mod installation, hardware checking, and version control.</p>
                         <div class="mod-price">$39</div>
+                        <div class="action-btns">
+                            <a href="#" class="buy-btn">Add to Cart</a>
+                            <a href="#" class="trial-btn">Details</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Mobile Link -->
+                <div class="mod-card" data-card="mobile-link">
+                    <div class="mod-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <div class="mod-content">
+                        <div class="mod-tags">
+                            <span class="mod-tag tag-remote-access">🌐 Remote Access & Integration</span>
+                        </div>
+                        <h3>Mobile Link</h3>
+                        <p>Secure remote access to your mods from anywhere via mobile app.</p>
+                        <div class="mod-price">$59</div>
+                        <div class="action-btns">
+                            <a href="#" class="buy-btn">Add to Cart</a>
+                            <a href="#" class="trial-btn">Details</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Voice Companion -->
+                <div class="mod-card" data-card="voice-companion">
+                    <div class="mod-icon">
+                        <i class="fas fa-microphone"></i>
+                    </div>
+                    <div class="mod-content">
+                        <div class="mod-tags">
+                            <span class="mod-tag tag-voice-video">🎙️ Voice & Video</span>
+                        </div>
+                        <h3>Voice Companion</h3>
+                        <p>Offline voice interaction with your mods using TTS technology.</p>
+                        <div class="mod-price">$19</div>
+                        <div class="action-btns">
+                            <a href="#" class="buy-btn">Add to Cart</a>
+                            <a href="#" class="trial-btn">Details</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Dev Tools Kit -->
+                <div class="mod-card" data-card="dev-tools">
+                    <div class="mod-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div class="mod-content">
+                        <div class="mod-tags">
+                            <span class="mod-tag tag-dev-tools">🧰 Dev Tools / Coders</span>
+                        </div>
+                        <h3>Dev Tools Kit</h3>
+                        <p>Advanced coding tools and API integration for developers.</p>
+                        <div class="mod-price">$49</div>
+                        <div class="action-btns">
+                            <a href="#" class="buy-btn">Add to Cart</a>
+                            <a href="#" class="trial-btn">Details</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Experimental Lab -->
+                <div class="mod-card" data-card="experimental-lab">
+                    <div class="mod-icon">
+                        <i class="fas fa-flask"></i>
+                    </div>
+                    <div class="mod-content">
+                        <div class="mod-tags">
+                            <span class="mod-tag tag-experimental">🕹️ Experimental / Lab</span>
+                        </div>
+                        <h3>Experimental Lab</h3>
+                        <p>Cutting-edge, untested mods for adventurous users.</p>
+                        <div class="mod-price">$29</div>
                         <div class="action-btns">
                             <a href="#" class="buy-btn">Add to Cart</a>
                             <a href="#" class="trial-btn">Details</a>
@@ -833,9 +923,9 @@
             <p class="section-subtitle" style="text-align: center; margin-bottom: 40px; color: rgba(255,255,255,0.7);">Save when you buy multiple mods together</p>
             
             <div class="bundle-grid">
-                <!-- Productivity Pack -->
+                <!-- Productivity Power Pack -->
                 <div class="bundle-card">
-                    <h3>Productivity Pack</h3>
+                    <h3>Productivity Power Pack</h3>
                     <div class="bundle-price">$49</div>
                     <div class="bundle-savings">Save $15 vs buying separately</div>
                     <ul class="bundle-features">
@@ -846,30 +936,30 @@
                     <a href="#" class="buy-btn">Get This Bundle</a>
                 </div>
                 
-                <!-- Content Creator Suite -->
+                <!-- Creative Studio Suite -->
                 <div class="bundle-card" style="border: 2px solid var(--premium);">
-                    <h3>Content Creator Suite</h3>
+                    <h3>Creative Studio Suite</h3>
                     <div class="bundle-price">$249</div>
                     <div class="bundle-savings">Save $79 vs buying separately</div>
                     <ul class="bundle-features">
                         <li>Narrated Video Generator</li>
                         <li>Real-Time Video Generator</li>
                         <li>Autobiography Generator</li>
-                        <li>Social Analyzer Toolkit</li>
+                        <li>Personality Painter</li>
                     </ul>
                     <a href="#" class="buy-btn premium">Get This Bundle</a>
                 </div>
                 
-                <!-- Personal Growth Bundle -->
+                <!-- Mind & Memory Bundle -->
                 <div class="bundle-card">
-                    <h3>Personal Growth Bundle</h3>
+                    <h3>Mind & Memory Bundle</h3>
                     <div class="bundle-price">$89</div>
                     <div class="bundle-savings">Save $26 vs buying separately</div>
                     <ul class="bundle-features">
                         <li>Emotional Check-In</li>
                         <li>Memory Sculptor</li>
-                        <li>Boundary Defender</li>
                         <li>Memory Auto-Tagger</li>
+                        <li>Autobiography Generator</li>
                     </ul>
                     <a href="#" class="buy-btn">Get This Bundle</a>
                 </div>
@@ -880,7 +970,7 @@
                     <div class="bundle-price">$349</div>
                     <div class="bundle-savings">Save $200+ vs buying separately</div>
                     <ul class="bundle-features">
-                        <li>All 12 Mods Included</li>
+                        <li>All 15 Mods Included</li>
                         <li>Free future updates</li>
                         <li>Priority support</li>
                         <li>Early access to new mods</li>
@@ -1000,6 +1090,42 @@
                     "Lists compatible or optimal mods",
                     "Manual or auto-update modes",
                     "UI with toggle-based install management"
+                ]
+            },
+            "mobile-link": {
+                fullDescription: "Secure remote access to your mods from anywhere in the world using Cloudflare Tunnel and mobile app bridging.",
+                keyFeatures: [
+                    "Secure tunnel via Cloudflare Access",
+                    "Android/iOS webapp or native app UI",
+                    "Voice-enabled (optional)",
+                    "Toggle guest or owner mode"
+                ]
+            },
+            "voice-companion": {
+                fullDescription: "Offline voice interaction using tools like MeloTTS or Coqui, giving your mods a voice that doesn't rely on cloud tokens.",
+                keyFeatures: [
+                    "Fully offline speech synthesis",
+                    "Choose tone (soft, formal, playful)",
+                    "Trigger by keyword or emotion",
+                    "Can run in background with journaling"
+                ]
+            },
+            "dev-tools": {
+                fullDescription: "For developers who want to extend functionality with custom code, API integrations, and system-level access.",
+                keyFeatures: [
+                    "Code architecture scaffolding",
+                    "UI layout suggestions and automation flow design",
+                    "Logic tree generation",
+                    "API planning and modular code snippet support"
+                ]
+            },
+            "experimental-lab": {
+                fullDescription: "Cutting-edge experimental features that are still in development. Use at your own risk but with potential for groundbreaking functionality.",
+                keyFeatures: [
+                    "Early access to unproven technologies",
+                    "Sandboxed environment for safety",
+                    "Community feedback integration",
+                    "Potential to shape future official mods"
                 ]
             }
         };
